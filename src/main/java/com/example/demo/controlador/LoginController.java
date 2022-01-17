@@ -9,16 +9,10 @@ import com.example.demo.modelo.LoginModel;
 import com.example.demo.modelo.crud.LoginRepository;
 import com.example.demo.vista.Login;
 import com.example.demo.vista.RegisterNewUser;
-import com.sun.org.apache.xml.internal.security.utils.Base64;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.security.MessageDigest;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
-import javax.crypto.Cipher;
-import javax.crypto.spec.SecretKeySpec;
-import javax.swing.JDialog;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -28,10 +22,18 @@ import javax.swing.JOptionPane;
 public class LoginController implements ActionListener {
 
     private LoginRepository loginRepository;
+    
     private Login loginVista;
+    
     RegisterNewUser dialogRegister = new RegisterNewUser(loginVista,true);
     private LoginModel loginModel;
-    String BOXPOWER = "RuxXEuri";
+    
+    private SecurityController securityController = new SecurityController();
+    
+    ImageIcon ok = new javax.swing.ImageIcon(getClass().getResource("/ok.png")); // NOI18N
+    ImageIcon error = new javax.swing.ImageIcon(getClass().getResource("/error.png")); //NOI18N
+    ImageIcon question = new javax.swing.ImageIcon(getClass().getResource("/question.png")); // NOI18N
+    ImageIcon alert = new javax.swing.ImageIcon(getClass().getResource("/alert.png")); //NOI18N
 
     public LoginController(LoginRepository loginRepository, Login loginVista) {
         this.loginRepository = loginRepository;
@@ -71,65 +73,27 @@ public class LoginController implements ActionListener {
          String repeatPass = dialogRegister.getLabelNewRepeatPass().getText();
          if(!"".equals(user) && !"".equals(password) && !"".equals(repeatPass)){
              if(password.equals(repeatPass)){
-                  String prueba = encryptPass(password);
-                  System.out.println(prueba);
-                  String prueba2 = decryptPass(prueba);
-                  System.out.println(prueba2);
+                 if(user.contains("Ruisu")){
+                    String passwordEncrypt = securityController.encryptPass(password);
+                    LoginModel account = new LoginModel();
+                    account.setName(user);
+                    account.setPassword(passwordEncrypt);
+                    loginRepository.save(account);
+                    JOptionPane.showMessageDialog(dialogRegister, "<html><h1 style='color:#cc8398'> Usuario guardado. </h1></html>","Registrarse", JOptionPane.PLAIN_MESSAGE , ok);
+                    dialogRegister.getLabelNewUser().setText("");
+                    dialogRegister.getLabelNewPassword().setText("");
+                    dialogRegister.getLabelNewRepeatPass().setText("");
+                    dialogRegister.dispose();
+                 }else{
+                    JOptionPane.showMessageDialog(dialogRegister, "<html><h1 style='color:#cc8398'> Ha ocurrido un error, no cumple con los requerimientos. </h1></html>","Registrarse", JOptionPane.PLAIN_MESSAGE , error); 
+                 }
              }else{
-                 JOptionPane.showMessageDialog(dialogRegister, "Las contraeñas no son iguales");
+                 JOptionPane.showMessageDialog(dialogRegister,  "<html><h1 style='color:#cc8398'> Ups!!, las contraseñas no son iguales. </h1></html>","Registrarse", JOptionPane.PLAIN_MESSAGE , alert);
                  dialogRegister.getLabelNewRepeatPass().setText("");
              }
          } else {
-             JOptionPane.showMessageDialog(dialogRegister, "Existen campos vacios.");
+             JOptionPane.showMessageDialog(dialogRegister, "<html><h1 style='color:#cc8398'> Ups!!, llena todas las casillas ~~Onegaishimasu Oniichan. </h1></html>","Registrarse", JOptionPane.PLAIN_MESSAGE , alert);
          }
-     }
-     
-     private SecretKeySpec CreateBit(String text){
-         try {
-             byte [] stringText = text.getBytes("UTF-8");
-             MessageDigest md = MessageDigest.getInstance("SHA-1");
-             stringText = md.digest(stringText);
-             stringText = Arrays.copyOf(stringText, 16);
-             SecretKeySpec secretKeySpec = new SecretKeySpec(stringText, "AES");
-             return secretKeySpec;
-         } catch (Exception e) {
-             System.out.println("Error: "+ e.toString());
-             return null;
-         }
-     }
-     
-     private String encryptPass(String pass){
-         try {
-             SecretKeySpec secretKeySpec = CreateBit(BOXPOWER);
-             Cipher cipher = Cipher.getInstance("AES");
-             cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec);
-             
-             byte [] stringText = pass.getBytes("UTF-8");
-             byte [] encryptText = cipher.doFinal(stringText);
-             
-             String passEncrypt = Base64.encode(encryptText);
-             return passEncrypt;
-             
-         } catch (Exception e) {
-             System.out.println("Error: "+e.toString());
-             return null;
-         }
-     }
-     
-      private String decryptPass(String passEncrypt){
-         try{
-             SecretKeySpec secretKeySpec = CreateBit(BOXPOWER);
-             Cipher cipher = Cipher.getInstance("AES");
-             cipher.init(Cipher.DECRYPT_MODE, secretKeySpec);
-             
-             byte [] stringText = Base64.decode(passEncrypt);
-             byte [] decryptText = cipher.doFinal(stringText);
-             
-             String passDecrypt = new String(decryptText);
-             return passDecrypt;
-         } catch(Exception e){
-             return "";
-         }   
      }
       
 }
