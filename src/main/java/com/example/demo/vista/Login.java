@@ -121,6 +121,11 @@ public class Login extends javax.swing.JFrame {
                 labelPasswordActionPerformed(evt);
             }
         });
+        labelPassword.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                labelPasswordKeyPressed(evt);
+            }
+        });
 
         buttonLogin.setBackground(new java.awt.Color(242, 92, 132));
         buttonLogin.setFont(new java.awt.Font("Trebuchet MS", 1, 16)); // NOI18N
@@ -273,6 +278,10 @@ public class Login extends javax.swing.JFrame {
     private void labelPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_labelPasswordActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_labelPasswordActionPerformed
+
+    private void labelPasswordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_labelPasswordKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_labelPasswordKeyPressed
 
     /**
      * @param args the command line arguments

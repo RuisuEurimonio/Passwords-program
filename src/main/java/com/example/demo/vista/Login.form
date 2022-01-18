@@ -301,6 +301,7 @@
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="labelPasswordActionPerformed"/>
+                        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="labelPasswordKeyPressed"/>
                       </Events>
                     </Component>
                     <Component class="javax.swing.JButton" name="buttonLogin">

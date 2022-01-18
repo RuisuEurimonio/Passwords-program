@@ -22,14 +22,17 @@ import javax.swing.JOptionPane;
 public class LoginController implements ActionListener {
 
     private LoginRepository loginRepository;
-    
+
     private Login loginVista;
-    
-    RegisterNewUser dialogRegister = new RegisterNewUser(loginVista,true);
+
+    RegisterNewUser dialogRegister = new RegisterNewUser(loginVista, true);
     private LoginModel loginModel;
-    
+
     private SecurityController securityController = new SecurityController();
     
+    String templateHtmlStart = "<html><h1 style='font-size:18px;color:#cc8398'>";
+    String templateHtmlEnd = "</h1></html>";
+
     ImageIcon ok = new javax.swing.ImageIcon(getClass().getResource("/ok.png")); // NOI18N
     ImageIcon error = new javax.swing.ImageIcon(getClass().getResource("/error.png")); //NOI18N
     ImageIcon question = new javax.swing.ImageIcon(getClass().getResource("/question.png")); // NOI18N
@@ -41,59 +44,82 @@ public class LoginController implements ActionListener {
         createEvents();
     }
 
-    
-    
-    public void createEvents(){
+    public void createEvents() {
         loginVista.getButtonCreate().addActionListener(this);
         loginVista.getButtonLogin().addActionListener(this);
+        loginVista.getLabelUser().addActionListener(this);
+        loginVista.getLabelPassword().addActionListener(this);
         dialogRegister.getButtonNewAccept().addActionListener(this);
     }
 
     @Override
     public void actionPerformed(ActionEvent event) {
-        if(event.getSource() == loginVista.getButtonCreate()){
+        if (event.getSource() == loginVista.getButtonCreate()) {
             dialogRegister.setVisible(true);
-        } else if(event.getSource() == loginVista.getButtonLogin()){
+        } else if (event.getSource() == loginVista.getButtonLogin()
+                || event.getSource() == loginVista.getLabelUser()
+                || event.getSource() == loginVista.getLabelPassword()) {
             login();
-        } else if(event.getSource()==dialogRegister.getButtonNewAccept()){
+        } else if (event.getSource() == dialogRegister.getButtonNewAccept()) {
             register();
         }
     }
-    
-     private void login(){
-        String txtUser = loginVista.getLabelUser().toString();
-        String txtPassword = loginVista.getLabelPassword().toString();
-        Optional<LoginModel> loginDB = loginRepository.findByNameAndPassword(txtUser, txtPassword);
-        System.out.println(loginDB); 
+
+    private void login() {
+        String txtUser = loginVista.getLabelUser().getText();
+        String txtPassword = new String(loginVista.getLabelPassword().getPassword());
+        if (!"".equals(txtUser) && !"".equals(txtPassword)) {
+            String password = securityController.encryptPass(txtPassword);
+            Optional<LoginModel> loginDB = loginRepository.findByNameAndPassword(txtUser, password);
+            if (loginDB.isPresent()) {
+                JOptionPane.showMessageDialog(dialogRegister, templateHtmlStart + " Has iniciado sesión. " + templateHtmlEnd, "Iniciar sesión.", JOptionPane.PLAIN_MESSAGE, ok);
+            } else {
+                JOptionPane.showMessageDialog(dialogRegister, templateHtmlStart + " Usuario o contraseña incorrectos " + templateHtmlEnd, "Iniciar sesión.", JOptionPane.PLAIN_MESSAGE, error);
+            }
+        } else {
+            JOptionPane.showMessageDialog(dialogRegister, templateHtmlStart+"Ups!!, llena todas las casillas"+templateHtmlEnd+"\n"+templateHtmlStart+"~~Onegaishimasu Oniichan. "+templateHtmlEnd, "Registrarse", JOptionPane.PLAIN_MESSAGE, alert);
+        }
     }
-     
-     private void register(){
-         String user = dialogRegister.getLabelNewUser().getText();
-         String password = dialogRegister.getLabelNewPassword().getText();
-         String repeatPass = dialogRegister.getLabelNewRepeatPass().getText();
-         if(!"".equals(user) && !"".equals(password) && !"".equals(repeatPass)){
-             if(password.equals(repeatPass)){
-                 if(user.contains("Ruisu")){
-                    String passwordEncrypt = securityController.encryptPass(password);
-                    LoginModel account = new LoginModel();
-                    account.setName(user);
-                    account.setPassword(passwordEncrypt);
-                    loginRepository.save(account);
-                    JOptionPane.showMessageDialog(dialogRegister, "<html><h1 style='color:#cc8398'> Usuario guardado. </h1></html>","Registrarse", JOptionPane.PLAIN_MESSAGE , ok);
-                    dialogRegister.getLabelNewUser().setText("");
-                    dialogRegister.getLabelNewPassword().setText("");
+
+    private void register() {
+        String user = dialogRegister.getLabelNewUser().getText();
+        String password = dialogRegister.getLabelNewPassword().getText();
+        String repeatPass = dialogRegister.getLabelNewRepeatPass().getText();
+        if (!"".equals(user) && !"".equals(password) && !"".equals(repeatPass)) {
+            if (user.length() >= 3 && password.length() >= 9) {
+                if (password.equals(repeatPass)) {
+                    if (user.contains("Ruisu")) {
+                        String passwordEncrypt = securityController.encryptPass(password);
+                        LoginModel account = new LoginModel();
+                        account.setName(user);
+                        account.setPassword(passwordEncrypt);
+                        int option = JOptionPane.showConfirmDialog(loginVista, templateHtmlStart + " Desea crear esta cuenta? " + templateHtmlEnd, "Registrarse", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, question);
+                        if (option == 0) {
+                            loginRepository.save(account);
+                            JOptionPane.showMessageDialog(dialogRegister, templateHtmlStart + " Usuario guardado. " + templateHtmlEnd, "Registrarse", JOptionPane.PLAIN_MESSAGE, ok);
+                            dialogRegister.getLabelNewUser().setText("");
+                            dialogRegister.getLabelNewPassword().setText("");
+                            dialogRegister.getLabelNewRepeatPass().setText("");
+                            dialogRegister.dispose();
+                        } else {
+                            JOptionPane.showMessageDialog(dialogRegister, templateHtmlStart + " Se ha cancelado el registrar usuario. " + templateHtmlEnd, "Registrarse", JOptionPane.PLAIN_MESSAGE, alert);
+                            dialogRegister.getLabelNewUser().setText("");
+                            dialogRegister.getLabelNewPassword().setText("");
+                            dialogRegister.getLabelNewRepeatPass().setText("");
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(dialogRegister, templateHtmlStart + " Ha ocurrido un error, no cumple con los requerimientos. " + templateHtmlEnd, "Registrarse", JOptionPane.PLAIN_MESSAGE, error);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(dialogRegister, templateHtmlStart + " Ups!!, las contraseñas no son iguales. " + templateHtmlEnd, "Registrarse", JOptionPane.PLAIN_MESSAGE, alert);
                     dialogRegister.getLabelNewRepeatPass().setText("");
-                    dialogRegister.dispose();
-                 }else{
-                    JOptionPane.showMessageDialog(dialogRegister, "<html><h1 style='color:#cc8398'> Ha ocurrido un error, no cumple con los requerimientos. </h1></html>","Registrarse", JOptionPane.PLAIN_MESSAGE , error); 
-                 }
-             }else{
-                 JOptionPane.showMessageDialog(dialogRegister,  "<html><h1 style='color:#cc8398'> Ups!!, las contraseñas no son iguales. </h1></html>","Registrarse", JOptionPane.PLAIN_MESSAGE , alert);
-                 dialogRegister.getLabelNewRepeatPass().setText("");
-             }
-         } else {
-             JOptionPane.showMessageDialog(dialogRegister, "<html><h1 style='color:#cc8398'> Ups!!, llena todas las casillas ~~Onegaishimasu Oniichan. </h1></html>","Registrarse", JOptionPane.PLAIN_MESSAGE , alert);
-         }
-     }
-      
+                }
+            } else {
+                JOptionPane.showMessageDialog(dialogRegister, templateHtmlStart + " El usuario debe tener minimo 3 caracteres y la contraseña 9. " + templateHtmlEnd, "Registrarse", JOptionPane.PLAIN_MESSAGE, alert);
+            }
+        } else {
+            JOptionPane.showMessageDialog(dialogRegister, templateHtmlStart + " Ups!!, llena todas las casillas </h1></html>\n"+ templateHtmlStart + "~~Onegaishimasu Oniichan. </h1></html>", "Registrarse", JOptionPane.PLAIN_MESSAGE, alert);
+        }
+    }
+
 }
