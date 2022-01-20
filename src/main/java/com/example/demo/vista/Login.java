@@ -131,6 +131,11 @@ public class Login extends javax.swing.JFrame {
         buttonLogin.setFont(new java.awt.Font("Trebuchet MS", 1, 16)); // NOI18N
         buttonLogin.setForeground(new java.awt.Color(13, 13, 13));
         buttonLogin.setText("Ingresar.");
+        buttonLogin.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                buttonLoginKeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -282,6 +287,10 @@ public class Login extends javax.swing.JFrame {
     private void labelPasswordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_labelPasswordKeyPressed
         // TODO add your handling code here:
     }//GEN-LAST:event_labelPasswordKeyPressed
+
+    private void buttonLoginKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_buttonLoginKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_buttonLoginKeyPressed
 
     /**
      * @param args the command line arguments

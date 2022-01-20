@@ -50,6 +50,9 @@ public class LoginController implements ActionListener {
         loginVista.getLabelUser().addActionListener(this);
         loginVista.getLabelPassword().addActionListener(this);
         dialogRegister.getButtonNewAccept().addActionListener(this);
+        dialogRegister.getLabelNewUser().addActionListener(this);
+        dialogRegister.getLabelNewPassword().addActionListener(this);
+        dialogRegister.getLabelNewRepeatPass().addActionListener(this);
     }
 
     @Override
@@ -60,7 +63,10 @@ public class LoginController implements ActionListener {
                 || event.getSource() == loginVista.getLabelUser()
                 || event.getSource() == loginVista.getLabelPassword()) {
             login();
-        } else if (event.getSource() == dialogRegister.getButtonNewAccept()) {
+        } else if (event.getSource() == dialogRegister.getButtonNewAccept()
+                || event.getSource() == dialogRegister.getLabelNewUser()
+                || event.getSource() == dialogRegister.getLabelNewPassword()
+                || event.getSource() == dialogRegister.getLabelNewRepeatPass()) {
             register();
         }
     }
