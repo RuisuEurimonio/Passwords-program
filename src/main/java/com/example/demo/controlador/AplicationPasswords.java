@@ -1,6 +1,7 @@
 package com.example.demo.controlador;
 
 import com.example.demo.modelo.crud.LoginRepository;
+import com.example.demo.vista.Home;
 import com.example.demo.vista.Login;
 import com.example.demo.vista.RegisterNewUser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,9 +31,12 @@ public class AplicationPasswords {
         @Bean
         ApplicationRunner applicationRunner(){
             return args -> {
+                Home home = new Home();
                 Login login = new Login();
                 LoginController controller = new LoginController(loginModel, login);
-                login.setVisible(true);
+                HomeController hm = new HomeController(home);
+                login.setVisible(false);
+                home.setVisible(true);
             };
         }
         
