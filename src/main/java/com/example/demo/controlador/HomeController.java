@@ -26,24 +26,21 @@ public class HomeController implements ActionListener {
     public HomeController(Home home){
         this.home = home;
         createEvents();
-        System.out.println("Hola");
+        home.getJtpInputs().setSelectedIndex(0);
+        home.getJtpTables().setSelectedIndex(0);
     }
     
     private void createEvents(){
         home.getBtnSelectPassword().addActionListener(this);
         home.getBtnSelectUsers().addActionListener(this);
         home.getBtnSelectConfig().addActionListener(this);
-        System.out.println("x2");
-        home.getJtpInputs().setSelectedIndex(1);
     }
     
     @Override
     public void actionPerformed(ActionEvent event){
-        System.out.println(event.toString());
         if(event.getSource() == home.getBtnSelectPassword()){
             home.getJtpInputs().setSelectedIndex(0);
             home.getJtpTables().setSelectedIndex(0);
-            System.out.println("hola por dos");
         } else if( event.getSource() == home.getBtnSelectUsers()){
             home.getJtpInputs().setSelectedIndex(1);
             home.getJtpTables().setSelectedIndex(1);

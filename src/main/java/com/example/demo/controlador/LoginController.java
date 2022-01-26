@@ -7,6 +7,7 @@ package com.example.demo.controlador;
 
 import com.example.demo.modelo.LoginModel;
 import com.example.demo.modelo.crud.LoginRepository;
+import com.example.demo.vista.Home;
 import com.example.demo.vista.Login;
 import com.example.demo.vista.RegisterNewUser;
 import java.awt.event.ActionEvent;
@@ -78,6 +79,10 @@ public class LoginController implements ActionListener {
             String password = securityController.encryptPass(txtPassword);
             Optional<LoginModel> loginDB = loginRepository.findByNameAndPassword(txtUser, password);
             if (loginDB.isPresent()) {
+                loginVista.dispose();
+                Home home = new Home();
+                HomeController hm = new HomeController(home);
+                home.setVisible(true);
                 JOptionPane.showMessageDialog(dialogRegister, templateHtmlStart + " Has iniciado sesión. " + templateHtmlEnd, "Iniciar sesión.", JOptionPane.PLAIN_MESSAGE, ok);
             } else {
                 JOptionPane.showMessageDialog(dialogRegister, templateHtmlStart + " Usuario o contraseña incorrectos " + templateHtmlEnd, "Iniciar sesión.", JOptionPane.PLAIN_MESSAGE, error);

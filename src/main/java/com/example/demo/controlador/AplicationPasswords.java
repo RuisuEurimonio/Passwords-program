@@ -31,12 +31,9 @@ public class AplicationPasswords {
         @Bean
         ApplicationRunner applicationRunner(){
             return args -> {
-                Home home = new Home();
                 Login login = new Login();
                 LoginController controller = new LoginController(loginModel, login);
-                HomeController hm = new HomeController(home);
-                login.setVisible(false);
-                home.setVisible(true);
+                login.setVisible(true);
             };
         }
         
