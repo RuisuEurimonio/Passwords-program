@@ -47,9 +47,10 @@ public class Home extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jtUsers = new javax.swing.JTable();
         jPanel7 = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
         btnSelectPassword = new javax.swing.JButton();
         btnSelectUsers = new javax.swing.JButton();
-        btnSelectConfig = new javax.swing.JButton();
+        btnSelectInfo = new javax.swing.JButton();
         jtpInputs = new javax.swing.JTabbedPane();
         jPanel8 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -76,6 +77,9 @@ public class Home extends javax.swing.JFrame {
         btnNewUser = new javax.swing.JButton();
         btnDeleteUser = new javax.swing.JButton();
         jPanel10 = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -242,17 +246,10 @@ public class Home extends javax.swing.JFrame {
 
         jPanel7.setBackground(new java.awt.Color(242, 167, 187));
         jPanel7.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED, new java.awt.Color(254, 207, 220), new java.awt.Color(13, 13, 13)));
+        jPanel7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
-        jPanel7.setLayout(jPanel7Layout);
-        jPanel7Layout.setHorizontalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 666, Short.MAX_VALUE)
-        );
-        jPanel7Layout.setVerticalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 283, Short.MAX_VALUE)
-        );
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/informationGirl.png"))); // NOI18N
+        jPanel7.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 647, -1));
 
         jtpTables.addTab("tab3", jPanel7);
 
@@ -273,10 +270,10 @@ public class Home extends javax.swing.JFrame {
         btnSelectUsers.setText("<html>\nUsuarios.\n</html>");
         jPanel4.add(btnSelectUsers, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 152, 35));
 
-        btnSelectConfig.setBackground(new java.awt.Color(13, 13, 13));
-        btnSelectConfig.setForeground(new java.awt.Color(254, 207, 220));
-        btnSelectConfig.setText("<html>\nConfiguracion.\n</html>");
-        jPanel4.add(btnSelectConfig, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, 152, 35));
+        btnSelectInfo.setBackground(new java.awt.Color(13, 13, 13));
+        btnSelectInfo.setForeground(new java.awt.Color(254, 207, 220));
+        btnSelectInfo.setText("<html> Información. </html>");
+        jPanel4.add(btnSelectInfo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, 152, 35));
 
         jPanel8.setBackground(new java.awt.Color(242, 167, 187));
         jPanel8.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED, new java.awt.Color(254, 207, 220), new java.awt.Color(13, 13, 0)));
@@ -364,13 +361,13 @@ public class Home extends javax.swing.JFrame {
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel13Layout.createSequentialGroup()
                 .addContainerGap(7, Short.MAX_VALUE)
-                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
+                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel13Layout.createSequentialGroup()
                         .addGap(2, 2, 2)
                         .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtSearchPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnSearchPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE))))
+                            .addComponent(btnSearchPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)))
+                    .addComponent(jLabel5))
                 .addGap(0, 8, Short.MAX_VALUE))
         );
 
@@ -412,10 +409,11 @@ public class Home extends javax.swing.JFrame {
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel15Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(txtSearchUser, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSearchUser, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE))
+                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnSearchUser, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
+                    .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel6)
+                        .addComponent(txtSearchUser, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(10, Short.MAX_VALUE))
         );
 
@@ -469,15 +467,38 @@ public class Home extends javax.swing.JFrame {
         jPanel10.setBackground(new java.awt.Color(242, 167, 187));
         jPanel10.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED, new java.awt.Color(254, 207, 220), new java.awt.Color(13, 13, 0)));
 
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(13, 13, 13));
+        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel8.setText("Información.");
+
+        jTextArea1.setBackground(new java.awt.Color(231, 198, 255));
+        jTextArea1.setColumns(20);
+        jTextArea1.setForeground(new java.awt.Color(13, 13, 13));
+        jTextArea1.setRows(5);
+        jTextArea1.setText("           Aplicación realizada por Ruisu Eurimonio\n                                Versión actual: 1.0\n               Fecha de realizacion: En desarrollo.\n    Funcionalidad: Gestionar contraseñas personales\n            en una base de datos MySql de manera\n                               encriptada y segura.");
+        jScrollPane3.setViewportView(jTextArea1);
+
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 516, Short.MAX_VALUE)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addGap(106, 106, 106)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(114, Short.MAX_VALUE))
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 165, Short.MAX_VALUE)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jtpInputs.addTab("tab3", jPanel10);
@@ -579,7 +600,7 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JButton btnSavePassword;
     private javax.swing.JButton btnSearchPassword;
     private javax.swing.JButton btnSearchUser;
-    private javax.swing.JButton btnSelectConfig;
+    private javax.swing.JButton btnSelectInfo;
     private javax.swing.JButton btnSelectPassword;
     private javax.swing.JButton btnSelectUsers;
     private javax.swing.JButton btnUpdatePassword;
@@ -589,6 +610,8 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
@@ -607,6 +630,8 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTable jtPasswords;
     private javax.swing.JTable jtUsers;
     private javax.swing.JTabbedPane jtpInputs;
@@ -652,11 +677,11 @@ public class Home extends javax.swing.JFrame {
     }
 
     public JButton getBtnSelectConfig() {
-        return btnSelectConfig;
+        return btnSelectInfo;
     }
 
     public void setBtnSelectConfig(JButton btnSelectConfig) {
-        this.btnSelectConfig = btnSelectConfig;
+        this.btnSelectInfo = btnSelectConfig;
     }
 
     public JButton getBtnSelectPassword() {
