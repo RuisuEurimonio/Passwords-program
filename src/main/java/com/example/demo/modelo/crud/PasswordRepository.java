@@ -5,13 +5,14 @@
  */
 package com.example.demo.modelo.crud;
 
-import com.example.demo.modelo.Password;
+
+import com.example.demo.modelo.PasswordModel;
 import org.springframework.data.repository.CrudRepository;
 
 /**
  *
  * @author Usuario
  */
-public interface PasswordRepository extends CrudRepository<Password, Long>  {
+public interface PasswordRepository extends CrudRepository<PasswordModel, Integer>  {
     
 }

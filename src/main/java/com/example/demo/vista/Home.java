@@ -7,6 +7,7 @@ package com.example.demo.vista;
 
 import javax.swing.JButton;
 import javax.swing.JTabbedPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 
 /**
@@ -80,6 +81,7 @@ public class Home extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
+        txtNameInfo = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -171,14 +173,14 @@ public class Home extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "Correo", "Descripcion."
+                "ID", "Correo", "Descripcion.", "Ultima actualización"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                true, false, true
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -196,10 +198,6 @@ public class Home extends javax.swing.JFrame {
             jtPasswords.getColumnModel().getColumn(0).setMinWidth(0);
             jtPasswords.getColumnModel().getColumn(0).setPreferredWidth(0);
             jtPasswords.getColumnModel().getColumn(0).setMaxWidth(0);
-            jtPasswords.getColumnModel().getColumn(1).setResizable(false);
-            jtPasswords.getColumnModel().getColumn(1).setPreferredWidth(270);
-            jtPasswords.getColumnModel().getColumn(2).setResizable(false);
-            jtPasswords.getColumnModel().getColumn(2).setPreferredWidth(400);
         }
 
         jPanel5.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 650, 270));
@@ -299,7 +297,7 @@ public class Home extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(13, 13, 13));
-        jLabel4.setText("Notas:");
+        jLabel4.setText("Información:");
         jPanel8.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(205, 8, -1, -1));
 
         txtNotePassword.setBackground(new java.awt.Color(13, 13, 13));
@@ -308,18 +306,22 @@ public class Home extends javax.swing.JFrame {
 
         btnSavePassword.setBackground(new java.awt.Color(242, 167, 187));
         btnSavePassword.setIcon(new javax.swing.ImageIcon(getClass().getResource("/save.png"))); // NOI18N
+        btnSavePassword.setToolTipText("Guardar");
         jPanel8.add(btnSavePassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 10, 48, 48));
 
         btnDeletePassword.setBackground(new java.awt.Color(242, 167, 187));
         btnDeletePassword.setIcon(new javax.swing.ImageIcon(getClass().getResource("/delete.png"))); // NOI18N
+        btnDeletePassword.setToolTipText("Eliminar");
         jPanel8.add(btnDeletePassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 10, 48, 48));
 
         btnUpdatePassword.setBackground(new java.awt.Color(242, 167, 187));
         btnUpdatePassword.setIcon(new javax.swing.ImageIcon(getClass().getResource("/update.png"))); // NOI18N
+        btnUpdatePassword.setToolTipText("Actualizar");
         jPanel8.add(btnUpdatePassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 60, 48, 48));
 
         btnCleanPassword.setBackground(new java.awt.Color(242, 167, 187));
         btnCleanPassword.setIcon(new javax.swing.ImageIcon(getClass().getResource("/clean.png"))); // NOI18N
+        btnCleanPassword.setToolTipText("Limpiar");
         jPanel8.add(btnCleanPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 60, 48, 48));
 
         txtIdPassword.addActionListener(new java.awt.event.ActionListener() {
@@ -485,19 +487,25 @@ public class Home extends javax.swing.JFrame {
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 504, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(jPanel10Layout.createSequentialGroup()
-                .addGap(106, 106, 106)
+                .addGap(17, 17, 17)
+                .addComponent(txtNameInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(92, 92, 92)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(114, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE)
+                    .addGroup(jPanel10Layout.createSequentialGroup()
+                        .addComponent(txtNameInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -638,6 +646,7 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JTabbedPane jtpTables;
     private javax.swing.JTextField txtEmailPassword;
     private javax.swing.JTextField txtIdPassword;
+    private javax.swing.JTextField txtNameInfo;
     private javax.swing.JTextField txtNotePassword;
     private javax.swing.JTextField txtPasswordPassword;
     private javax.swing.JTextField txtSearchPassword;
@@ -762,6 +771,70 @@ public class Home extends javax.swing.JFrame {
 
     public void setTxtSearchPassword(JTextField txtSearchPassword) {
         this.txtSearchPassword = txtSearchPassword;
+    }
+
+    public JButton getBtnDeleteUser() {
+        return btnDeleteUser;
+    }
+
+    public void setBtnDeleteUser(JButton btnDeleteUser) {
+        this.btnDeleteUser = btnDeleteUser;
+    }
+
+    public JButton getBtnNewUser() {
+        return btnNewUser;
+    }
+
+    public void setBtnNewUser(JButton btnNewUser) {
+        this.btnNewUser = btnNewUser;
+    }
+
+    public JButton getBtnSearchUser() {
+        return btnSearchUser;
+    }
+
+    public void setBtnSearchUser(JButton btnSearchUser) {
+        this.btnSearchUser = btnSearchUser;
+    }
+
+    public JButton getBtnSelectInfo() {
+        return btnSelectInfo;
+    }
+
+    public void setBtnSelectInfo(JButton btnSelectInfo) {
+        this.btnSelectInfo = btnSelectInfo;
+    }
+
+    public JTable getJtPasswords() {
+        return jtPasswords;
+    }
+
+    public void setJtPasswords(JTable jtPasswords) {
+        this.jtPasswords = jtPasswords;
+    }
+
+    public JTable getJtUsers() {
+        return jtUsers;
+    }
+
+    public void setJtUsers(JTable jtUsers) {
+        this.jtUsers = jtUsers;
+    }
+
+    public JTextField getTxtNameInfo() {
+        return txtNameInfo;
+    }
+
+    public void setTxtNameInfo(JTextField txtNameInfo) {
+        this.txtNameInfo = txtNameInfo;
+    }
+
+    public JTextField getTxtSearchUser() {
+        return txtSearchUser;
+    }
+
+    public void setTxtSearchUser(JTextField txtSearchUser) {
+        this.txtSearchUser = txtSearchUser;
     }
 
     

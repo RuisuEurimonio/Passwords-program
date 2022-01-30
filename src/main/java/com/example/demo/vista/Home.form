@@ -269,10 +269,11 @@
                                   <Color blue="dc" green="cf" red="fe" type="rgb"/>
                                 </Property>
                                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                                  <Table columnCount="3" rowCount="0">
-                                    <Column editable="true" title="ID" type="java.lang.String"/>
+                                  <Table columnCount="4" rowCount="0">
+                                    <Column editable="false" title="ID" type="java.lang.String"/>
                                     <Column editable="false" title="Correo" type="java.lang.String"/>
-                                    <Column editable="true" title="Descripcion." type="java.lang.String"/>
+                                    <Column editable="false" title="Descripcion." type="java.lang.String"/>
+                                    <Column editable="false" title="Ultima actualizaci&#xf3;n" type="java.lang.String"/>
                                   </Table>
                                 </Property>
                                 <Property name="autoResizeMode" type="int" value="1"/>
@@ -283,12 +284,17 @@
                                       <Editor/>
                                       <Renderer/>
                                     </Column>
-                                    <Column maxWidth="-1" minWidth="-1" prefWidth="270" resizable="false">
+                                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                                       <Title/>
                                       <Editor/>
                                       <Renderer/>
                                     </Column>
-                                    <Column maxWidth="-1" minWidth="-1" prefWidth="400" resizable="false">
+                                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                                      <Title/>
+                                      <Editor/>
+                                      <Renderer/>
+                                    </Column>
+                                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                                       <Title/>
                                       <Editor/>
                                       <Renderer/>
@@ -572,7 +578,7 @@
                             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="d" green="d" red="d" type="rgb"/>
                             </Property>
-                            <Property name="text" type="java.lang.String" value="Notas:"/>
+                            <Property name="text" type="java.lang.String" value="Informaci&#xf3;n:"/>
                           </Properties>
                           <Constraints>
                             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -603,6 +609,7 @@
                             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                               <Image iconType="3" name="/save.png"/>
                             </Property>
+                            <Property name="toolTipText" type="java.lang.String" value="Guardar"/>
                           </Properties>
                           <Constraints>
                             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -618,6 +625,7 @@
                             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                               <Image iconType="3" name="/delete.png"/>
                             </Property>
+                            <Property name="toolTipText" type="java.lang.String" value="Eliminar"/>
                           </Properties>
                           <Constraints>
                             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -633,6 +641,7 @@
                             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                               <Image iconType="3" name="/update.png"/>
                             </Property>
+                            <Property name="toolTipText" type="java.lang.String" value="Actualizar"/>
                           </Properties>
                           <Constraints>
                             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -648,6 +657,7 @@
                             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                               <Image iconType="3" name="/clean.png"/>
                             </Property>
+                            <Property name="toolTipText" type="java.lang.String" value="Limpiar"/>
                           </Properties>
                           <Constraints>
                             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -961,13 +971,15 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jLabel8" max="32767" attributes="0"/>
+                                  <Component id="jLabel8" pref="504" max="32767" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="-2" pref="106" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
+                                  <Component id="txtNameInfo" min="-2" pref="0" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="92" max="-2" attributes="0"/>
                                   <Component id="jScrollPane3" min="-2" pref="296" max="-2" attributes="0"/>
-                                  <EmptySpace pref="114" max="32767" attributes="0"/>
+                                  <EmptySpace max="32767" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
@@ -976,7 +988,13 @@
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="jLabel8" min="-2" pref="35" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jScrollPane3" pref="118" max="32767" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="jScrollPane3" pref="118" max="32767" attributes="0"/>
+                                      <Group type="102" attributes="0">
+                                          <Component id="txtNameInfo" min="-2" pref="0" max="-2" attributes="0"/>
+                                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                      </Group>
+                                  </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -1017,6 +1035,8 @@
                             </Component>
                           </SubComponents>
                         </Container>
+                        <Component class="javax.swing.JTextField" name="txtNameInfo">
+                        </Component>
                       </SubComponents>
                     </Container>
                   </SubComponents>

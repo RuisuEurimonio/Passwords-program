@@ -13,42 +13,42 @@ import org.springframework.data.relational.core.mapping.Table;
  *
  * @author Usuario
  */
-@Table("password")
-public class Password {
+@Table("Password")
+public class PasswordModel {
     
     @Id
     @Column("idPassword")
-    private Long idPassword;
+    private int idPassword;
     @Column("email")
-    private Long email;
+    private String email;
     @Column("password")
     private String password;
     @Column("description")
     private String description;
 
-    public Password() {
+    public PasswordModel() {
     } 
 
-    public Password(Long idPassword, Long email, String password, String description) {
+    public PasswordModel(int idPassword, String email, String password, String description) {
         this.idPassword = idPassword;
         this.email = email;
         this.password = password;
         this.description = description;
     }
 
-    public Long getIdPassword() {
+    public int getIdPassword() {
         return idPassword;
     }
 
-    public void setIdPassword(Long idPassword) {
+    public void setIdPassword(int idPassword) {
         this.idPassword = idPassword;
     }
 
-    public Long getEmail() {
+    public String getEmail() {
         return email;
     }
 
-    public void setEmail(Long email) {
+    public void setEmail(String email) {
         this.email = email;
     }
 

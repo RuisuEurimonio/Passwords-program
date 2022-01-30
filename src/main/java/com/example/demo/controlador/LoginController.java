@@ -7,6 +7,7 @@ package com.example.demo.controlador;
 
 import com.example.demo.modelo.LoginModel;
 import com.example.demo.modelo.crud.LoginRepository;
+import com.example.demo.modelo.crud.PasswordRepository;
 import com.example.demo.vista.Home;
 import com.example.demo.vista.Login;
 import com.example.demo.vista.RegisterNewUser;
@@ -15,6 +16,7 @@ import java.awt.event.ActionListener;
 import java.util.Optional;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
@@ -23,7 +25,7 @@ import javax.swing.JOptionPane;
 public class LoginController implements ActionListener {
 
     private LoginRepository loginRepository;
-
+    private PasswordRepository passwordRepository;
     private Login loginVista;
 
     RegisterNewUser dialogRegister = new RegisterNewUser(loginVista, true);
@@ -39,9 +41,10 @@ public class LoginController implements ActionListener {
     ImageIcon question = new javax.swing.ImageIcon(getClass().getResource("/question.png")); // NOI18N
     ImageIcon alert = new javax.swing.ImageIcon(getClass().getResource("/alert.png")); //NOI18N
 
-    public LoginController(LoginRepository loginRepository, Login loginVista) {
+    public LoginController(LoginRepository loginRepository, Login loginVista, PasswordRepository pr) {
         this.loginRepository = loginRepository;
         this.loginVista = loginVista;
+        this.passwordRepository = pr;
         createEvents();
     }
 
@@ -81,7 +84,7 @@ public class LoginController implements ActionListener {
             if (loginDB.isPresent()) {
                 loginVista.dispose();
                 Home home = new Home();
-                HomeController hm = new HomeController(home);
+                HomeController hm = new HomeController(home, passwordRepository);
                 home.setVisible(true);
                 JOptionPane.showMessageDialog(dialogRegister, templateHtmlStart + " Has iniciado sesión. " + templateHtmlEnd, "Iniciar sesión.", JOptionPane.PLAIN_MESSAGE, ok);
             } else {
