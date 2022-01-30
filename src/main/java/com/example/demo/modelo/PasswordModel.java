@@ -5,6 +5,7 @@
  */
 package com.example.demo.modelo;
 
+import java.util.Date;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
@@ -25,6 +26,8 @@ public class PasswordModel {
     private String password;
     @Column("description")
     private String description;
+    @Column("date")
+    private String date;
 
     public PasswordModel() {
     } 
@@ -66,6 +69,14 @@ public class PasswordModel {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
     
     

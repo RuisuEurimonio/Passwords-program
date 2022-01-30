@@ -10,8 +10,11 @@ import com.example.demo.modelo.crud.PasswordRepository;
 import com.example.demo.vista.Home;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -22,6 +25,7 @@ public class HomeController implements ActionListener {
     Home home;
     PasswordRepository passwordRepository;
     SecurityController sc = new SecurityController();
+    DefaultTableModel modelo = new DefaultTableModel();
     Validations validations;
     
     ImageIcon ok = new javax.swing.ImageIcon(getClass().getResource("/ok.png")); // NOI18N
@@ -36,6 +40,7 @@ public class HomeController implements ActionListener {
         this.home = home;
         this.passwordRepository = pr;
         createEvents();
+        tablePasswords();
         home.getJtpInputs().setSelectedIndex(0);
         home.getJtpTables().setSelectedIndex(0);
     }
@@ -63,6 +68,8 @@ public class HomeController implements ActionListener {
         if(event.getSource() == home.getBtnSelectPassword()){
             home.getJtpInputs().setSelectedIndex(0);
             home.getJtpTables().setSelectedIndex(0);
+            cleanTable();
+            tablePasswords();
         } else if( event.getSource() == home.getBtnSelectUsers()){
             home.getJtpInputs().setSelectedIndex(1);
             home.getJtpTables().setSelectedIndex(1);
@@ -92,14 +99,19 @@ public class HomeController implements ActionListener {
             if(validations.validationEmail(email)){
                 try{
                     String passwordEncrypt = sc.encryptPass(password);
+                    Date date = new Date();
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss a");
                     PasswordModel passwordModel = new PasswordModel();
                     passwordModel.setEmail(email);
                     passwordModel.setPassword(passwordEncrypt);
                     passwordModel.setDescription(addition);
+                    passwordModel.setDate(sdf.format(date));
                     int answer = JOptionPane.showConfirmDialog(home, templateHtmlStart+"¿Desea guardar esta contraseña?"+templateHtmlEnd,"Guardar contraseña.", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, question);
                     if(answer == 0){
                         passwordRepository.save(passwordModel);
                         cleanPasswords();
+                        cleanTable();
+                        tablePasswords();
                         JOptionPane.showMessageDialog(home, templateHtmlStart+"Contraseña guardada."+templateHtmlEnd, "Guardar contraseña",JOptionPane.PLAIN_MESSAGE, ok);
                     } else {
                         cleanPasswords();
@@ -114,6 +126,27 @@ public class HomeController implements ActionListener {
         } else {
             JOptionPane.showMessageDialog(home, templateHtmlStart+"Hay espacios vacios necesarios."+templateHtmlEnd, "Guardar contraseña",JOptionPane.PLAIN_MESSAGE, alert);
         }
+    }
+    
+    public void tablePasswords(){
+        modelo = (DefaultTableModel) home.getJtPasswords().getModel();
+        passwordRepository.findAll().forEach(password -> {
+            Object[] row = new Object[5];
+            row[0] = password.getIdPassword();
+            row[1] = password.getEmail();
+            row[2] = password.getPassword();
+            row[3] = password.getDescription();
+            row[4] = password.getDate();
+        modelo.addRow(row);
+        });
+        home.getJtPasswords().setModel(modelo);
+    }
+    
+    public void cleanTable(){
+     for(int i = 0 ; i < modelo.getRowCount() ; i++){
+         modelo.removeRow(i);
+         i = i - 1;
+     }
     }
     
 }

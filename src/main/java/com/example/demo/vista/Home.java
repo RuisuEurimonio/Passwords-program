@@ -173,14 +173,14 @@ public class Home extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "Correo", "Descripcion.", "Ultima actualización"
+                "ID", "Correo", "Password", "Descripcion.", "Ultima actualización"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -198,6 +198,9 @@ public class Home extends javax.swing.JFrame {
             jtPasswords.getColumnModel().getColumn(0).setMinWidth(0);
             jtPasswords.getColumnModel().getColumn(0).setPreferredWidth(0);
             jtPasswords.getColumnModel().getColumn(0).setMaxWidth(0);
+            jtPasswords.getColumnModel().getColumn(2).setMinWidth(0);
+            jtPasswords.getColumnModel().getColumn(2).setPreferredWidth(0);
+            jtPasswords.getColumnModel().getColumn(2).setMaxWidth(0);
         }
 
         jPanel5.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 650, 270));
