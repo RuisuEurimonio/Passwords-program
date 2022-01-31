@@ -84,7 +84,7 @@ public class LoginController implements ActionListener {
             if (loginDB.isPresent()) {
                 loginVista.dispose();
                 Home home = new Home();
-                HomeController hm = new HomeController(home, passwordRepository);
+                HomeController hm = new HomeController(home, passwordRepository, txtUser, password);
                 home.setVisible(true);
                 JOptionPane.showMessageDialog(dialogRegister, templateHtmlStart + " Has iniciado sesión. " + templateHtmlEnd, "Iniciar sesión.", JOptionPane.PLAIN_MESSAGE, ok);
             } else {

@@ -69,6 +69,7 @@ public class Home extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         txtSearchPassword = new javax.swing.JTextField();
         btnSearchPassword = new javax.swing.JButton();
+        txtDatePassword = new javax.swing.JTextField();
         jPanel9 = new javax.swing.JPanel();
         jPanel15 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
@@ -327,6 +328,7 @@ public class Home extends javax.swing.JFrame {
         btnCleanPassword.setToolTipText("Limpiar");
         jPanel8.add(btnCleanPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 60, 48, 48));
 
+        txtIdPassword.setEditable(false);
         txtIdPassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtIdPasswordActionPerformed(evt);
@@ -377,6 +379,9 @@ public class Home extends javax.swing.JFrame {
         );
 
         jPanel8.add(jPanel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(8, 116, 500, 45));
+
+        txtDatePassword.setText("jTextField1");
+        jPanel8.add(txtDatePassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 0, 0));
 
         jtpInputs.addTab("tab1", jPanel8);
 
@@ -647,6 +652,7 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JTable jtUsers;
     private javax.swing.JTabbedPane jtpInputs;
     private javax.swing.JTabbedPane jtpTables;
+    private javax.swing.JTextField txtDatePassword;
     private javax.swing.JTextField txtEmailPassword;
     private javax.swing.JTextField txtIdPassword;
     private javax.swing.JTextField txtNameInfo;
@@ -838,6 +844,14 @@ public class Home extends javax.swing.JFrame {
 
     public void setTxtSearchUser(JTextField txtSearchUser) {
         this.txtSearchUser = txtSearchUser;
+    }
+
+    public JTextField getTxtDatePassword() {
+        return txtDatePassword;
+    }
+
+    public void setTxtDatePassword(JTextField txtDatePassword) {
+        this.txtDatePassword = txtDatePassword;
     }
 
     
