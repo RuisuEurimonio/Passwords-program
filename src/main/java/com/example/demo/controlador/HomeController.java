@@ -8,6 +8,7 @@ package com.example.demo.controlador;
 import com.example.demo.modelo.PasswordModel;
 import com.example.demo.modelo.crud.PasswordRepository;
 import com.example.demo.vista.Home;
+import com.example.demo.vista.ValidationPassword;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -28,6 +29,7 @@ public class HomeController implements ActionListener {
     PasswordRepository passwordRepository;
     SecurityController sc = new SecurityController();
     DefaultTableModel modelo = new DefaultTableModel();
+    ValidationPassword vp = new ValidationPassword(home, true);
     Validations validations;
     String user;
     String passwordLogin;
@@ -67,6 +69,9 @@ public class HomeController implements ActionListener {
         home.getBtnDeleteUser().addActionListener(this);
         home.getBtnNewUser().addActionListener(this);
         home.getBtnSearchUser().addActionListener(this);
+        //ValitaionPassword
+        vp.getBtnPasswordValidation().addActionListener(this);
+        vp.getTxtPasswordValidation().addActionListener(this);
     }
 
     MouseListener mouseListener = new MouseListener() {
@@ -112,7 +117,10 @@ public class HomeController implements ActionListener {
             savePassword();
         } else if (event.getSource() == home.getBtnUpdatePassword()) {
             updatePassword();
-        }
+        } else if (event.getSource() == vp.getBtnPasswordValidation() ||
+                event.getSource() == vp.getTxtPasswordValidation()){
+            vp.dispose();
+        } 
     }
 
     public void savePassword() {
@@ -160,16 +168,23 @@ public class HomeController implements ActionListener {
         String password = home.getJtPasswords().getValueAt(row, 2).toString();
         String description = home.getJtPasswords().getValueAt(row, 3).toString();
         String date = home.getJtPasswords().getValueAt(row, 4).toString();
-        String answer = JOptionPane.showInputDialog(home, templateHtmlStart+"Repite la contraseña del usuario actual"+templateHtmlEnd, "Actualizar contraseña", 3);
-        String passwordE = sc.encryptPass(answer);
-        if(passwordE.equals(passwordLogin)){
-            home.getTxtIdPassword().setText(id);
-            home.getTxtEmailPassword().setText(email);
-            home.getTxtPasswordPassword().setText(password);
-            home.getTxtNotePassword().setText(description);
-            home.getTxtDatePassword().setText(date);
+        vp.setVisible(true);
+        String passwordValidation = new String(vp.getTxtPasswordValidation().getPassword());
+        String passwordE = sc.encryptPass(passwordValidation);
+        if(!"".equals(passwordValidation)){
+            if(passwordE.equals(passwordLogin)){
+                home.getTxtIdPassword().setText(id);
+                home.getTxtEmailPassword().setText(email);
+                home.getTxtPasswordPassword().setText(password);
+                home.getTxtNotePassword().setText(description);
+                home.getTxtDatePassword().setText(date);
+                vp.getTxtPasswordValidation().setText("");
+            }else{
+                JOptionPane.showMessageDialog(home, templateHtmlStart + "Contraseña incorrecta." + templateHtmlEnd, "Actualizar contraseña", JOptionPane.PLAIN_MESSAGE, error);            }
+                vp.getTxtPasswordValidation().setText("");
         }else{
-            JOptionPane.showMessageDialog(home, templateHtmlStart + "Contraseña incorrecta." + templateHtmlEnd, "Actualizar contraseña", JOptionPane.PLAIN_MESSAGE, error);
+            JOptionPane.showMessageDialog(home, templateHtmlStart + "El campo esta vacío." + templateHtmlEnd, "Actualizar contraseña", JOptionPane.PLAIN_MESSAGE, error);
+            vp.getTxtPasswordValidation().setText("");
         }
     }
 
