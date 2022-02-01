@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.example.demo.controlador;
 
 import com.example.demo.modelo.PasswordModel;
@@ -14,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -159,38 +155,67 @@ public class HomeController implements ActionListener {
             JOptionPane.showMessageDialog(home, templateHtmlStart + "Hay espacios vacios necesarios." + templateHtmlEnd, "Guardar contraseña", JOptionPane.PLAIN_MESSAGE, alert);
         }
     }
+    
+    public PasswordModel tableDatas(int row){
+        PasswordModel pm = new PasswordModel();
+        pm.setIdPassword(Integer.parseInt(home.getJtPasswords().getValueAt(row, 0).toString()));
+        pm.setEmail(home.getJtPasswords().getValueAt(row, 1).toString());
+        pm.setPassword(home.getJtPasswords().getValueAt(row, 2).toString());
+        pm.setDescription(home.getJtPasswords().getValueAt(row, 3).toString());
+        pm.setDate(home.getJtPasswords().getValueAt(row, 4).toString());
+        return pm;
+    }
 
     public void loadPassword() {
-        cleanPasswords();
         int row = home.getJtPasswords().getSelectedRow();
-        String id = home.getJtPasswords().getValueAt(row, 0).toString();
-        String email = home.getJtPasswords().getValueAt(row, 1).toString();
-        String password = home.getJtPasswords().getValueAt(row, 2).toString();
-        String description = home.getJtPasswords().getValueAt(row, 3).toString();
-        String date = home.getJtPasswords().getValueAt(row, 4).toString();
+        PasswordModel listDataP = tableDatas(row);
+        cleanPasswords();
         vp.setVisible(true);
         String passwordValidation = new String(vp.getTxtPasswordValidation().getPassword());
         String passwordE = sc.encryptPass(passwordValidation);
         if(!"".equals(passwordValidation)){
             if(passwordE.equals(passwordLogin)){
-                home.getTxtIdPassword().setText(id);
-                home.getTxtEmailPassword().setText(email);
-                home.getTxtPasswordPassword().setText(password);
-                home.getTxtNotePassword().setText(description);
-                home.getTxtDatePassword().setText(date);
+                String passwordOk = sc.decryptPass(listDataP.getPassword());
+                home.getTxtIdPassword().setText(""+listDataP.getIdPassword());
+                home.getTxtEmailPassword().setText(listDataP.getEmail());
+                home.getTxtPasswordPassword().setText(passwordOk);
+                home.getTxtNotePassword().setText(listDataP.getDescription());
+                home.getTxtDatePassword().setText(listDataP.getDate());
                 vp.getTxtPasswordValidation().setText("");
             }else{
-                JOptionPane.showMessageDialog(home, templateHtmlStart + "Contraseña incorrecta." + templateHtmlEnd, "Actualizar contraseña", JOptionPane.PLAIN_MESSAGE, error);            }
+                JOptionPane.showMessageDialog(home, templateHtmlStart + "Contraseña incorrecta." + templateHtmlEnd, "Ver contraseña", JOptionPane.PLAIN_MESSAGE, error);            }
                 vp.getTxtPasswordValidation().setText("");
         }else{
-            JOptionPane.showMessageDialog(home, templateHtmlStart + "El campo esta vacío." + templateHtmlEnd, "Actualizar contraseña", JOptionPane.PLAIN_MESSAGE, error);
+            JOptionPane.showMessageDialog(home, templateHtmlStart + "El campo esta vacío." + templateHtmlEnd, "Ver contraseña", JOptionPane.PLAIN_MESSAGE, error);
             vp.getTxtPasswordValidation().setText("");
         }
     }
 
     public void updatePassword() {
         if (!"".equals(home.getTxtIdPassword().getText())) {
-            
+            int row = home.getJtPasswords().getSelectedRow();
+            PasswordModel pm = tableDatas(row);
+            String encrypt = sc.encryptPass(home.getTxtPasswordPassword().getText());
+            if(!pm.getEmail().equals(home.getTxtEmailPassword().getText()) 
+                    || !pm.getPassword().equals(encrypt)
+                    || !pm.getDescription().equals(home.getTxtNotePassword().getText())){
+                Date date = new Date();
+                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss a");
+                String passwordNew = sc.encryptPass(home.getTxtPasswordPassword().getText());
+                PasswordModel passwordUpdate = new PasswordModel();
+                passwordUpdate.setIdPassword(Integer.parseInt(home.getTxtIdPassword().getText()));
+                passwordUpdate.setEmail(home.getTxtEmailPassword().getText());
+                passwordUpdate.setPassword(passwordNew);
+                passwordUpdate.setDescription(home.getTxtNotePassword().getText());
+                passwordUpdate.setDate(sdf.format(date));
+                passwordRepository.save(passwordUpdate);
+                JOptionPane.showMessageDialog(home, templateHtmlStart + "Contraseña actualizada." + templateHtmlEnd, "Actualizar contraseña", JOptionPane.PLAIN_MESSAGE, ok);
+                cleanPasswords();
+                cleanTable();
+                tablePasswords();
+            }else{
+                JOptionPane.showMessageDialog(home, templateHtmlStart + "No hay cambio en los datos." + templateHtmlEnd, "Actualizar contraseña", JOptionPane.PLAIN_MESSAGE, alert);
+            }
         } else {
             JOptionPane.showMessageDialog(home, templateHtmlStart + "Seleccione una contraseña." + templateHtmlEnd, "Actualizar contraseña", JOptionPane.PLAIN_MESSAGE, alert);
         }

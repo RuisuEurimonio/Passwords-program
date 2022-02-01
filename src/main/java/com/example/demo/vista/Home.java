@@ -8,6 +8,7 @@ package com.example.demo.vista;
 import javax.swing.JButton;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 /**
@@ -59,7 +60,6 @@ public class Home extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         txtPasswordPassword = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        txtNotePassword = new javax.swing.JTextField();
         btnSavePassword = new javax.swing.JButton();
         btnDeletePassword = new javax.swing.JButton();
         btnUpdatePassword = new javax.swing.JButton();
@@ -70,6 +70,8 @@ public class Home extends javax.swing.JFrame {
         txtSearchPassword = new javax.swing.JTextField();
         btnSearchPassword = new javax.swing.JButton();
         txtDatePassword = new javax.swing.JTextField();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        txtNotePassword = new javax.swing.JTextArea();
         jPanel9 = new javax.swing.JPanel();
         jPanel15 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
@@ -297,16 +299,12 @@ public class Home extends javax.swing.JFrame {
 
         txtPasswordPassword.setBackground(new java.awt.Color(13, 13, 13));
         txtPasswordPassword.setForeground(new java.awt.Color(254, 207, 220));
-        jPanel8.add(txtPasswordPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(8, 88, 191, -1));
+        jPanel8.add(txtPasswordPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(8, 88, 183, -1));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(13, 13, 13));
         jLabel4.setText("Información:");
         jPanel8.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(205, 8, -1, -1));
-
-        txtNotePassword.setBackground(new java.awt.Color(13, 13, 13));
-        txtNotePassword.setForeground(new java.awt.Color(254, 207, 220));
-        jPanel8.add(txtNotePassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(205, 30, 200, 80));
 
         btnSavePassword.setBackground(new java.awt.Color(242, 167, 187));
         btnSavePassword.setIcon(new javax.swing.ImageIcon(getClass().getResource("/save.png"))); // NOI18N
@@ -382,6 +380,16 @@ public class Home extends javax.swing.JFrame {
 
         txtDatePassword.setText("jTextField1");
         jPanel8.add(txtDatePassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 0, 0));
+
+        txtNotePassword.setBackground(new java.awt.Color(13, 13, 13));
+        txtNotePassword.setColumns(20);
+        txtNotePassword.setForeground(new java.awt.Color(254, 207, 220));
+        txtNotePassword.setLineWrap(true);
+        txtNotePassword.setRows(5);
+        txtNotePassword.setWrapStyleWord(true);
+        jScrollPane4.setViewportView(txtNotePassword);
+
+        jPanel8.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 30, 200, 78));
 
         jtpInputs.addTab("tab1", jPanel8);
 
@@ -647,6 +655,7 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTable jtPasswords;
     private javax.swing.JTable jtUsers;
@@ -656,7 +665,7 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JTextField txtEmailPassword;
     private javax.swing.JTextField txtIdPassword;
     private javax.swing.JTextField txtNameInfo;
-    private javax.swing.JTextField txtNotePassword;
+    private javax.swing.JTextArea txtNotePassword;
     private javax.swing.JTextField txtPasswordPassword;
     private javax.swing.JTextField txtSearchPassword;
     private javax.swing.JTextField txtSearchUser;
@@ -758,14 +767,6 @@ public class Home extends javax.swing.JFrame {
         this.txtIdPassword = txtIdPassword;
     }
 
-    public JTextField getTxtNotePassword() {
-        return txtNotePassword;
-    }
-
-    public void setTxtNotePassword(JTextField txtNotePassword) {
-        this.txtNotePassword = txtNotePassword;
-    }
-
     public JTextField getTxtPasswordPassword() {
         return txtPasswordPassword;
     }
@@ -852,6 +853,14 @@ public class Home extends javax.swing.JFrame {
 
     public void setTxtDatePassword(JTextField txtDatePassword) {
         this.txtDatePassword = txtDatePassword;
+    }
+
+    public JTextArea getTxtNotePassword() {
+        return txtNotePassword;
+    }
+
+    public void setTxtNotePassword(JTextArea txtNotePassword) {
+        this.txtNotePassword = txtNotePassword;
     }
 
     
