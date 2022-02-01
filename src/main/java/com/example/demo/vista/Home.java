@@ -201,9 +201,15 @@ public class Home extends javax.swing.JFrame {
             jtPasswords.getColumnModel().getColumn(0).setMinWidth(0);
             jtPasswords.getColumnModel().getColumn(0).setPreferredWidth(0);
             jtPasswords.getColumnModel().getColumn(0).setMaxWidth(0);
+            jtPasswords.getColumnModel().getColumn(1).setMinWidth(180);
+            jtPasswords.getColumnModel().getColumn(1).setPreferredWidth(180);
+            jtPasswords.getColumnModel().getColumn(1).setMaxWidth(180);
             jtPasswords.getColumnModel().getColumn(2).setMinWidth(0);
             jtPasswords.getColumnModel().getColumn(2).setPreferredWidth(0);
             jtPasswords.getColumnModel().getColumn(2).setMaxWidth(0);
+            jtPasswords.getColumnModel().getColumn(4).setMinWidth(150);
+            jtPasswords.getColumnModel().getColumn(4).setPreferredWidth(150);
+            jtPasswords.getColumnModel().getColumn(4).setMaxWidth(150);
         }
 
         jPanel5.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 650, 270));

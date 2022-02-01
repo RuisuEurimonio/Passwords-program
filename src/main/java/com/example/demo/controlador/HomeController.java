@@ -73,7 +73,9 @@ public class HomeController implements ActionListener {
     MouseListener mouseListener = new MouseListener() {
         @Override
         public void mouseClicked(MouseEvent e) {
-            loadPassword();
+            if(e.getClickCount() % 2 == 0){
+                loadPassword();
+            }
         }
 
         @Override
@@ -116,7 +118,9 @@ public class HomeController implements ActionListener {
         } else if (event.getSource() == vp.getBtnPasswordValidation() ||
                 event.getSource() == vp.getTxtPasswordValidation()){
             vp.dispose();
-        } 
+        } else if (event.getSource() == home.getBtnDeletePassword()){
+            deletePassword();
+        }
     }
 
     public void savePassword() {
@@ -182,6 +186,7 @@ public class HomeController implements ActionListener {
                 home.getTxtNotePassword().setText(listDataP.getDescription());
                 home.getTxtDatePassword().setText(listDataP.getDate());
                 vp.getTxtPasswordValidation().setText("");
+                home.getBtnSavePassword().setEnabled(false);
             }else{
                 JOptionPane.showMessageDialog(home, templateHtmlStart + "Contraseña incorrecta." + templateHtmlEnd, "Ver contraseña", JOptionPane.PLAIN_MESSAGE, error);            }
                 vp.getTxtPasswordValidation().setText("");
@@ -199,25 +204,53 @@ public class HomeController implements ActionListener {
             if(!pm.getEmail().equals(home.getTxtEmailPassword().getText()) 
                     || !pm.getPassword().equals(encrypt)
                     || !pm.getDescription().equals(home.getTxtNotePassword().getText())){
-                Date date = new Date();
-                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss a");
-                String passwordNew = sc.encryptPass(home.getTxtPasswordPassword().getText());
-                PasswordModel passwordUpdate = new PasswordModel();
-                passwordUpdate.setIdPassword(Integer.parseInt(home.getTxtIdPassword().getText()));
-                passwordUpdate.setEmail(home.getTxtEmailPassword().getText());
-                passwordUpdate.setPassword(passwordNew);
-                passwordUpdate.setDescription(home.getTxtNotePassword().getText());
-                passwordUpdate.setDate(sdf.format(date));
-                passwordRepository.save(passwordUpdate);
-                JOptionPane.showMessageDialog(home, templateHtmlStart + "Contraseña actualizada." + templateHtmlEnd, "Actualizar contraseña", JOptionPane.PLAIN_MESSAGE, ok);
+                int answer = JOptionPane.showConfirmDialog(home, templateHtmlStart+"¿Desea actualizar esta contraseña?"+templateHtmlEnd, "Actualizar contraseña",JOptionPane.YES_NO_OPTION,JOptionPane.PLAIN_MESSAGE,question);
+                if(answer == 0){
+                    Date date = new Date();
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss a");
+                    String passwordNew = sc.encryptPass(home.getTxtPasswordPassword().getText());
+                    PasswordModel passwordUpdate = new PasswordModel();
+                    passwordUpdate.setIdPassword(Integer.parseInt(home.getTxtIdPassword().getText()));
+                    passwordUpdate.setEmail(home.getTxtEmailPassword().getText());
+                    passwordUpdate.setPassword(passwordNew);
+                    passwordUpdate.setDescription(home.getTxtNotePassword().getText());
+                    passwordUpdate.setDate(sdf.format(date));
+                    passwordRepository.save(passwordUpdate);
+                    JOptionPane.showMessageDialog(home, templateHtmlStart + "Contraseña actualizada." + templateHtmlEnd, "Actualizar contraseña", JOptionPane.PLAIN_MESSAGE, ok);
+                    cleanPasswords();
+                    cleanTable();
+                    tablePasswords();
+                    home.getBtnSavePassword().setEnabled(true);
+                } else {
+                    JOptionPane.showMessageDialog(home, templateHtmlStart + "No se ha actualizado la contraseña." + templateHtmlEnd, "Actualizar contraseña", JOptionPane.PLAIN_MESSAGE, alert);
+                    home.getBtnSavePassword().setEnabled(true);
                 cleanPasswords();
-                cleanTable();
-                tablePasswords();
+                }
             }else{
                 JOptionPane.showMessageDialog(home, templateHtmlStart + "No hay cambio en los datos." + templateHtmlEnd, "Actualizar contraseña", JOptionPane.PLAIN_MESSAGE, alert);
+                home.getBtnSavePassword().setEnabled(true);
+                cleanPasswords();
             }
         } else {
             JOptionPane.showMessageDialog(home, templateHtmlStart + "Seleccione una contraseña." + templateHtmlEnd, "Actualizar contraseña", JOptionPane.PLAIN_MESSAGE, alert);
+        }
+    }
+    
+    public void deletePassword(){
+        int row = home.getJtPasswords().getSelectedRow();
+        if(row != -1){
+            String email = home.getJtPasswords().getValueAt(row, 1).toString();
+            String description = home.getJtPasswords().getValueAt(row, 3).toString();
+            int answer = JOptionPane.showConfirmDialog(home, templateHtmlStart+"¿Desea eliminar esta contraseña?"+"</h1><br><h2 align='center'>Correo: "+email+"</h2><br><h2 align='center'>Descripción: "+description+"</h2></html>", "Eliminar contraseña",JOptionPane.YES_NO_OPTION,JOptionPane.PLAIN_MESSAGE,question);
+            if(answer == 0){
+                int id = Integer.parseInt(home.getJtPasswords().getValueAt(row, 0).toString());
+                passwordRepository.deleteById(id);
+                JOptionPane.showMessageDialog(home, templateHtmlStart + "Contraseña eliminada." + templateHtmlEnd, "Eliminar contraseña", JOptionPane.PLAIN_MESSAGE, ok);
+                cleanTable();
+                tablePasswords();
+            }
+        } else {
+            JOptionPane.showMessageDialog(home, templateHtmlStart + "Seleccione una contraseña." + templateHtmlEnd, "Eliminar contraseña", JOptionPane.PLAIN_MESSAGE, alert);
         }
     }
 
@@ -248,6 +281,7 @@ public class HomeController implements ActionListener {
         home.getTxtNotePassword().setText("");
         home.getTxtSearchPassword().setText("");
         home.getTxtPasswordPassword().setText("");
+        home.getBtnSavePassword().setEnabled(true);
     }
 
 }
