@@ -60,6 +60,7 @@ public class HomeController implements ActionListener {
         home.getBtnSavePassword().addActionListener(this);
         home.getBtnUpdatePassword().addActionListener(this);
         home.getBtnSearchPassword().addActionListener(this);
+        home.getTxtSearchPassword().addActionListener(this);
         home.getJtPasswords().addMouseListener(mouseListener);
         //Users
         home.getBtnDeleteUser().addActionListener(this);
@@ -120,6 +121,10 @@ public class HomeController implements ActionListener {
             vp.dispose();
         } else if (event.getSource() == home.getBtnDeletePassword()){
             deletePassword();
+        } else if (event.getSource() == home.getBtnSearchPassword()
+                || event.getSource() == home.getTxtSearchPassword()){
+            cleanTable();
+            searchPassword();
         }
     }
 
@@ -266,6 +271,29 @@ public class HomeController implements ActionListener {
             modelo.addRow(row);
         });
         home.getJtPasswords().setModel(modelo);
+    }
+    
+    public void searchPassword(){
+        String wordText = home.getTxtSearchPassword().getText();
+        String word = wordText.trim();
+        modelo = (DefaultTableModel) home.getJtPasswords().getModel();
+        passwordRepository.findByDescriptionContainingIgnoreCase(word).forEach(passwords -> {
+            Object[] item = new Object[5];
+            item[0] = passwords.getIdPassword();
+            item[1] = passwords.getEmail();
+            item[2] = passwords.getPassword();
+            item[3] = passwords.getDescription();
+            item[4] = passwords.getDate();
+            modelo.addRow(item);
+        });
+        home.getJtPasswords().setModel(modelo);
+        home.getTxtSearchPassword().setText("");
+        int rows = home.getJtPasswords().getRowCount();
+        if(rows == 0){
+            JOptionPane.showMessageDialog(home, templateHtmlStart + "No hay coincidencias.." + templateHtmlEnd, "Buscar contraseña", JOptionPane.PLAIN_MESSAGE, alert);
+            cleanTable();
+            tablePasswords();
+        }
     }
 
     public void cleanTable() {
