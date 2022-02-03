@@ -112,6 +112,8 @@ public class HomeController implements ActionListener {
         } else if (event.getSource() == home.getBtnSelectUsers()) {
             home.getJtpInputs().setSelectedIndex(1);
             home.getJtpTables().setSelectedIndex(1);
+            cleanTable();
+            tableUser();
             cleanUser();
         } else if (event.getSource() == home.getBtnSelectConfig()) {
             home.getJtpInputs().setSelectedIndex(2);
@@ -136,6 +138,8 @@ public class HomeController implements ActionListener {
             saveUser();
         } else if (event.getSource() == home.getBtnCleanUser()) {
             cleanUser();
+        } else if (event.getSource() == home.getBtnDeleteUser()){
+            deleteUser();
         }
     }
 
@@ -309,13 +313,6 @@ public class HomeController implements ActionListener {
         }
     }
 
-    public void cleanTable() {
-        for (int i = 0; i < modelo.getRowCount(); i++) {
-            modelo.removeRow(i);
-            i = i - 1;
-        }
-    }
-
     public void cleanPasswords() {
         home.getTxtEmailPassword().setText("");
         home.getTxtIdPassword().setText("");
@@ -340,6 +337,8 @@ public class HomeController implements ActionListener {
                         newUser.setName(user);
                         newUser.setPassword(passwordE);
                         lr.save(newUser);
+                        cleanTable();
+                        tableUser();
                         cleanUser();
                         JOptionPane.showMessageDialog(home, templateHtmlStart + "Se guardo el usuario." + templateHtmlEnd, "Guardar usuario", JOptionPane.PLAIN_MESSAGE, ok);
                     } else {
@@ -356,9 +355,47 @@ public class HomeController implements ActionListener {
         }
     }
 
+    public void tableUser() {
+        modelo = (DefaultTableModel) home.getJtUsers().getModel();
+        lr.findAll().forEach(user -> {
+            Object[] ob = new Object[2];
+            ob[0] = user.getId();
+            ob[1] = user.getName();
+            modelo.addRow(ob);
+        });
+        home.getJtUsers().setModel(modelo);
+    }
+
+    public void deleteUser() {
+        int row = home.getJtUsers().getSelectedRow();
+        if (row != -1) {
+            String user = home.getJtUsers().getValueAt(row, 1).toString();
+            int answer = JOptionPane.showConfirmDialog(home, templateHtmlStart + "¿Desea eliminar esta contraseña?" + "</h1><br><h2 align='center'>Usuario: " + user + "</h2></html>", "Eliminar usuario", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, question);
+            if (answer == 0) {
+                int id = Integer.parseInt(home.getJtUsers().getValueAt(row, 0).toString());
+                lr.deleteById(id);
+                cleanTable();
+                tableUser();
+                JOptionPane.showMessageDialog(home, templateHtmlStart + "Se elimino el usuario." + templateHtmlEnd, "Eliminar usuario", JOptionPane.PLAIN_MESSAGE, ok);
+            } else {
+                JOptionPane.showMessageDialog(home, templateHtmlStart + "No se elimino al usuario." + templateHtmlEnd, "Eliminar usuario", JOptionPane.PLAIN_MESSAGE, alert);
+            }
+        } else {
+            JOptionPane.showMessageDialog(home, templateHtmlStart + "Selecciona un usuario." + templateHtmlEnd, "Eliminar usuario", JOptionPane.PLAIN_MESSAGE, alert);
+        }
+    }
+
     public void cleanUser() {
         home.getTxtUserUser().setText("");
         home.getTxtPasswordUser().setText("");
         home.getTxtRepeatPasswordUser().setText("");
+    }
+
+    //General
+    public void cleanTable() {
+        for (int i = 0; i < modelo.getRowCount(); i++) {
+            modelo.removeRow(i);
+            i = i - 1;
+        }
     }
 }

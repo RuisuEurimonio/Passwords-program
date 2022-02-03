@@ -234,14 +234,14 @@ public class Home extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Usuario"
+                "idAccount", "Usuario"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class
+                java.lang.Object.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false
+                false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -254,7 +254,9 @@ public class Home extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(jtUsers);
         if (jtUsers.getColumnModel().getColumnCount() > 0) {
-            jtUsers.getColumnModel().getColumn(0).setResizable(false);
+            jtUsers.getColumnModel().getColumn(0).setMinWidth(0);
+            jtUsers.getColumnModel().getColumn(0).setPreferredWidth(0);
+            jtUsers.getColumnModel().getColumn(0).setMaxWidth(0);
         }
 
         jPanel6.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 650, 270));
