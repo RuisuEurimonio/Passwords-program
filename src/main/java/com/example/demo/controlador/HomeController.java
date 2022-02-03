@@ -71,6 +71,7 @@ public class HomeController implements ActionListener {
         home.getBtnDeleteUser().addActionListener(this);
         home.getBtnCleanUser().addActionListener(this);
         home.getBtnSearchUser().addActionListener(this);
+        home.getTxtSearchUser().addActionListener(this);
         //ValidationPassword
         vp.getBtnPasswordValidation().addActionListener(this);
         vp.getTxtPasswordValidation().addActionListener(this);
@@ -140,6 +141,9 @@ public class HomeController implements ActionListener {
             cleanUser();
         } else if (event.getSource() == home.getBtnDeleteUser()){
             deleteUser();
+        } else if(event.getSource() == home.getBtnSearchUser() 
+                || event.getSource() == home.getTxtSearchUser()){
+            searchUser();
         }
     }
 
@@ -383,6 +387,26 @@ public class HomeController implements ActionListener {
         } else {
             JOptionPane.showMessageDialog(home, templateHtmlStart + "Selecciona un usuario." + templateHtmlEnd, "Eliminar usuario", JOptionPane.PLAIN_MESSAGE, alert);
         }
+    }
+    
+    public void searchUser(){
+        cleanTable();
+        String wordTxt = home.getTxtSearchUser().getText();
+        String word = wordTxt.trim();
+        lr.findByNameContainingIgnoreCase(word).forEach(user -> {
+            Object[] ob = new Object[2];
+            ob[0] = user.getId();
+            ob[1] = user.getName();
+            modelo.addRow(ob);
+        });
+        home.getJtUsers().setModel(modelo);
+        int rows = home.getJtUsers().getRowCount();
+        if(rows == 0){
+            JOptionPane.showMessageDialog(home, templateHtmlStart + "No hay coincidencias." + templateHtmlEnd, "Buscar contraseña", JOptionPane.PLAIN_MESSAGE, alert);
+            cleanTable();
+            tableUser();
+        }
+        home.getTxtSearchUser().setText("");
     }
 
     public void cleanUser() {

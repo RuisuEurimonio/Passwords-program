@@ -16,4 +16,6 @@ import java.util.Optional;
 public interface LoginRepository extends CrudRepository<LoginModel, Integer> {
 
     Optional<LoginModel> findByNameAndPassword(String user, String password);
+    
+    Iterable<LoginModel> findByNameContainingIgnoreCase(String name);
 }
