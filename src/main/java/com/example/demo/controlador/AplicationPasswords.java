@@ -22,23 +22,23 @@ public class AplicationPasswords {
 
     @Autowired
     private LoginRepository loginModel;
-    
+
     @Autowired
     private PasswordRepository passwordRepository;
-    
-	public static void main(String[] args) {
-            SpringApplicationBuilder builder = new SpringApplicationBuilder(AplicationPasswords.class);
-            builder.headless(false);
-            ConfigurableApplicationContext context = builder.run(args);
-	}
 
-        @Bean
-        ApplicationRunner applicationRunner(){
-            return args -> {
-                Login login = new Login();
-                LoginController controller = new LoginController(loginModel, login, passwordRepository);
-                login.setVisible(true);
-            };
-        }
-        
+    public static void main(String[] args) {
+        SpringApplicationBuilder builder = new SpringApplicationBuilder(AplicationPasswords.class);
+        builder.headless(false);
+        ConfigurableApplicationContext context = builder.run(args);
+    }
+
+    @Bean
+    ApplicationRunner applicationRunner() {
+        return args -> {
+            Login login = new Login();
+            LoginController controller = new LoginController(loginModel, login, passwordRepository);
+            login.setVisible(true);
+        };
+    }
+
 }

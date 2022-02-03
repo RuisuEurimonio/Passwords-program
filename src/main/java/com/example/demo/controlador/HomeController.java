@@ -1,6 +1,8 @@
 package com.example.demo.controlador;
 
+import com.example.demo.modelo.LoginModel;
 import com.example.demo.modelo.PasswordModel;
+import com.example.demo.modelo.crud.LoginRepository;
 import com.example.demo.modelo.crud.PasswordRepository;
 import com.example.demo.vista.Home;
 import com.example.demo.vista.ValidationPassword;
@@ -9,7 +11,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -21,12 +22,14 @@ import javax.swing.table.DefaultTableModel;
  */
 public class HomeController implements ActionListener {
 
-    Home home;
-    PasswordRepository passwordRepository;
     SecurityController sc = new SecurityController();
     DefaultTableModel modelo = new DefaultTableModel();
+    Home home;
     ValidationPassword vp = new ValidationPassword(home, true);
+    LoginRepository lr;
+    PasswordRepository passwordRepository;
     Validations validations;
+
     String user;
     String passwordLogin;
 
@@ -38,10 +41,11 @@ public class HomeController implements ActionListener {
     String templateHtmlStart = "<html><h1 style='font-size:18px;color:#cc8398'>";
     String templateHtmlEnd = "</h1></html>";
 
-    public HomeController(Home home, PasswordRepository pr, String user, String password) {
+    public HomeController(Home home, PasswordRepository pr, LoginRepository lr, String user, String password) {
         this.home = home;
         this.passwordRepository = pr;
         this.user = user;
+        this.lr = lr;
         this.passwordLogin = password;
         home.getTxtNameInfo().setText(user);
         createEvents();
@@ -63,10 +67,11 @@ public class HomeController implements ActionListener {
         home.getTxtSearchPassword().addActionListener(this);
         home.getJtPasswords().addMouseListener(mouseListener);
         //Users
-        home.getBtnDeleteUser().addActionListener(this);
         home.getBtnNewUser().addActionListener(this);
+        home.getBtnDeleteUser().addActionListener(this);
+        home.getBtnCleanUser().addActionListener(this);
         home.getBtnSearchUser().addActionListener(this);
-        //ValitaionPassword
+        //ValidationPassword
         vp.getBtnPasswordValidation().addActionListener(this);
         vp.getTxtPasswordValidation().addActionListener(this);
     }
@@ -74,7 +79,7 @@ public class HomeController implements ActionListener {
     MouseListener mouseListener = new MouseListener() {
         @Override
         public void mouseClicked(MouseEvent e) {
-            if(e.getClickCount() % 2 == 0){
+            if (e.getClickCount() % 2 == 0) {
                 loadPassword();
             }
         }
@@ -107,6 +112,7 @@ public class HomeController implements ActionListener {
         } else if (event.getSource() == home.getBtnSelectUsers()) {
             home.getJtpInputs().setSelectedIndex(1);
             home.getJtpTables().setSelectedIndex(1);
+            cleanUser();
         } else if (event.getSource() == home.getBtnSelectConfig()) {
             home.getJtpInputs().setSelectedIndex(2);
             home.getJtpTables().setSelectedIndex(2);
@@ -116,18 +122,24 @@ public class HomeController implements ActionListener {
             savePassword();
         } else if (event.getSource() == home.getBtnUpdatePassword()) {
             updatePassword();
-        } else if (event.getSource() == vp.getBtnPasswordValidation() ||
-                event.getSource() == vp.getTxtPasswordValidation()){
+        } else if (event.getSource() == vp.getBtnPasswordValidation()
+                || event.getSource() == vp.getTxtPasswordValidation()) {
+            //vp = validation password
             vp.dispose();
-        } else if (event.getSource() == home.getBtnDeletePassword()){
+        } else if (event.getSource() == home.getBtnDeletePassword()) {
             deletePassword();
         } else if (event.getSource() == home.getBtnSearchPassword()
-                || event.getSource() == home.getTxtSearchPassword()){
+                || event.getSource() == home.getTxtSearchPassword()) {
             cleanTable();
             searchPassword();
+        } else if (event.getSource() == home.getBtnNewUser()) {
+            saveUser();
+        } else if (event.getSource() == home.getBtnCleanUser()) {
+            cleanUser();
         }
     }
 
+    //Password
     public void savePassword() {
         String email = home.getTxtEmailPassword().getText();
         String password = home.getTxtPasswordPassword().getText();
@@ -164,8 +176,8 @@ public class HomeController implements ActionListener {
             JOptionPane.showMessageDialog(home, templateHtmlStart + "Hay espacios vacios necesarios." + templateHtmlEnd, "Guardar contraseña", JOptionPane.PLAIN_MESSAGE, alert);
         }
     }
-    
-    public PasswordModel tableDatas(int row){
+
+    public PasswordModel tableDatas(int row) {
         PasswordModel pm = new PasswordModel();
         pm.setIdPassword(Integer.parseInt(home.getJtPasswords().getValueAt(row, 0).toString()));
         pm.setEmail(home.getJtPasswords().getValueAt(row, 1).toString());
@@ -182,20 +194,21 @@ public class HomeController implements ActionListener {
         vp.setVisible(true);
         String passwordValidation = new String(vp.getTxtPasswordValidation().getPassword());
         String passwordE = sc.encryptPass(passwordValidation);
-        if(!"".equals(passwordValidation)){
-            if(passwordE.equals(passwordLogin)){
+        if (!"".equals(passwordValidation)) {
+            if (passwordE.equals(passwordLogin)) {
                 String passwordOk = sc.decryptPass(listDataP.getPassword());
-                home.getTxtIdPassword().setText(""+listDataP.getIdPassword());
+                home.getTxtIdPassword().setText("" + listDataP.getIdPassword());
                 home.getTxtEmailPassword().setText(listDataP.getEmail());
                 home.getTxtPasswordPassword().setText(passwordOk);
                 home.getTxtNotePassword().setText(listDataP.getDescription());
                 home.getTxtDatePassword().setText(listDataP.getDate());
                 vp.getTxtPasswordValidation().setText("");
                 home.getBtnSavePassword().setEnabled(false);
-            }else{
-                JOptionPane.showMessageDialog(home, templateHtmlStart + "Contraseña incorrecta." + templateHtmlEnd, "Ver contraseña", JOptionPane.PLAIN_MESSAGE, error);            }
-                vp.getTxtPasswordValidation().setText("");
-        }else{
+            } else {
+                JOptionPane.showMessageDialog(home, templateHtmlStart + "Contraseña incorrecta." + templateHtmlEnd, "Ver contraseña", JOptionPane.PLAIN_MESSAGE, error);
+            }
+            vp.getTxtPasswordValidation().setText("");
+        } else {
             JOptionPane.showMessageDialog(home, templateHtmlStart + "El campo esta vacío." + templateHtmlEnd, "Ver contraseña", JOptionPane.PLAIN_MESSAGE, error);
             vp.getTxtPasswordValidation().setText("");
         }
@@ -206,11 +219,11 @@ public class HomeController implements ActionListener {
             int row = home.getJtPasswords().getSelectedRow();
             PasswordModel pm = tableDatas(row);
             String encrypt = sc.encryptPass(home.getTxtPasswordPassword().getText());
-            if(!pm.getEmail().equals(home.getTxtEmailPassword().getText()) 
+            if (!pm.getEmail().equals(home.getTxtEmailPassword().getText())
                     || !pm.getPassword().equals(encrypt)
-                    || !pm.getDescription().equals(home.getTxtNotePassword().getText())){
-                int answer = JOptionPane.showConfirmDialog(home, templateHtmlStart+"¿Desea actualizar esta contraseña?"+templateHtmlEnd, "Actualizar contraseña",JOptionPane.YES_NO_OPTION,JOptionPane.PLAIN_MESSAGE,question);
-                if(answer == 0){
+                    || !pm.getDescription().equals(home.getTxtNotePassword().getText())) {
+                int answer = JOptionPane.showConfirmDialog(home, templateHtmlStart + "¿Desea actualizar esta contraseña?" + templateHtmlEnd, "Actualizar contraseña", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, question);
+                if (answer == 0) {
                     Date date = new Date();
                     SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss a");
                     String passwordNew = sc.encryptPass(home.getTxtPasswordPassword().getText());
@@ -229,9 +242,9 @@ public class HomeController implements ActionListener {
                 } else {
                     JOptionPane.showMessageDialog(home, templateHtmlStart + "No se ha actualizado la contraseña." + templateHtmlEnd, "Actualizar contraseña", JOptionPane.PLAIN_MESSAGE, alert);
                     home.getBtnSavePassword().setEnabled(true);
-                cleanPasswords();
+                    cleanPasswords();
                 }
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(home, templateHtmlStart + "No hay cambio en los datos." + templateHtmlEnd, "Actualizar contraseña", JOptionPane.PLAIN_MESSAGE, alert);
                 home.getBtnSavePassword().setEnabled(true);
                 cleanPasswords();
@@ -240,14 +253,14 @@ public class HomeController implements ActionListener {
             JOptionPane.showMessageDialog(home, templateHtmlStart + "Seleccione una contraseña." + templateHtmlEnd, "Actualizar contraseña", JOptionPane.PLAIN_MESSAGE, alert);
         }
     }
-    
-    public void deletePassword(){
+
+    public void deletePassword() {
         int row = home.getJtPasswords().getSelectedRow();
-        if(row != -1){
+        if (row != -1) {
             String email = home.getJtPasswords().getValueAt(row, 1).toString();
             String description = home.getJtPasswords().getValueAt(row, 3).toString();
-            int answer = JOptionPane.showConfirmDialog(home, templateHtmlStart+"¿Desea eliminar esta contraseña?"+"</h1><br><h2 align='center'>Correo: "+email+"</h2><br><h2 align='center'>Descripción: "+description+"</h2></html>", "Eliminar contraseña",JOptionPane.YES_NO_OPTION,JOptionPane.PLAIN_MESSAGE,question);
-            if(answer == 0){
+            int answer = JOptionPane.showConfirmDialog(home, templateHtmlStart + "¿Desea eliminar esta contraseña?" + "</h1><br><h2 align='center'>Correo: " + email + "</h2><br><h2 align='center'>Descripción: " + description + "</h2></html>", "Eliminar contraseña", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, question);
+            if (answer == 0) {
                 int id = Integer.parseInt(home.getJtPasswords().getValueAt(row, 0).toString());
                 passwordRepository.deleteById(id);
                 JOptionPane.showMessageDialog(home, templateHtmlStart + "Contraseña eliminada." + templateHtmlEnd, "Eliminar contraseña", JOptionPane.PLAIN_MESSAGE, ok);
@@ -272,8 +285,8 @@ public class HomeController implements ActionListener {
         });
         home.getJtPasswords().setModel(modelo);
     }
-    
-    public void searchPassword(){
+
+    public void searchPassword() {
         String wordText = home.getTxtSearchPassword().getText();
         String word = wordText.trim();
         modelo = (DefaultTableModel) home.getJtPasswords().getModel();
@@ -289,8 +302,8 @@ public class HomeController implements ActionListener {
         home.getJtPasswords().setModel(modelo);
         home.getTxtSearchPassword().setText("");
         int rows = home.getJtPasswords().getRowCount();
-        if(rows == 0){
-            JOptionPane.showMessageDialog(home, templateHtmlStart + "No hay coincidencias.." + templateHtmlEnd, "Buscar contraseña", JOptionPane.PLAIN_MESSAGE, alert);
+        if (rows == 0) {
+            JOptionPane.showMessageDialog(home, templateHtmlStart + "No hay coincidencias." + templateHtmlEnd, "Buscar contraseña", JOptionPane.PLAIN_MESSAGE, alert);
             cleanTable();
             tablePasswords();
         }
@@ -312,4 +325,40 @@ public class HomeController implements ActionListener {
         home.getBtnSavePassword().setEnabled(true);
     }
 
+    //User
+    public void saveUser() {
+        String user = home.getTxtUserUser().getText();
+        String password = home.getTxtPasswordUser().getText();
+        String repeatPassword = home.getTxtRepeatPasswordUser().getText();
+        if (!"".equals(user) && !"".equals(password) && !"".equals(repeatPassword)) {
+            if (user.length() >= 3 && password.length() >= 9) {
+                if (password.equals(repeatPassword)) {
+                    int asnwer = JOptionPane.showConfirmDialog(home, templateHtmlStart + "¿Desea guardar este usuario?" + templateHtmlEnd, "Guardar usuario.", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, question);
+                    if (asnwer == 0) {
+                        String passwordE = sc.encryptPass(password);
+                        LoginModel newUser = new LoginModel();
+                        newUser.setName(user);
+                        newUser.setPassword(passwordE);
+                        lr.save(newUser);
+                        cleanUser();
+                        JOptionPane.showMessageDialog(home, templateHtmlStart + "Se guardo el usuario." + templateHtmlEnd, "Guardar usuario", JOptionPane.PLAIN_MESSAGE, ok);
+                    } else {
+                        JOptionPane.showMessageDialog(home, templateHtmlStart + "No se guardo el usuario." + templateHtmlEnd, "Guardar usuario", JOptionPane.PLAIN_MESSAGE, alert);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(home, templateHtmlStart + "Las contraseñas son diferentes." + templateHtmlEnd, "Guardar usuario", JOptionPane.PLAIN_MESSAGE, alert);
+                }
+            } else {
+                JOptionPane.showMessageDialog(home, templateHtmlStart + "Ups!!, Los campos deben tener:</h1><br><h2 style='color:#FFC6FF'>Usuario: 3 caracteres.</h2><br><h2 style='color:#FFC6FF'>Contraseña: 9 caracteres.</h2></html>", "Guardar usuario.", JOptionPane.PLAIN_MESSAGE, alert);
+            }
+        } else {
+            JOptionPane.showMessageDialog(home, templateHtmlStart + " Ups!!, llena todas las casillas </h1></html>\n" + templateHtmlStart + "~~Onegaishimasu Oniichan. </h1></html>", "Registrarse", JOptionPane.PLAIN_MESSAGE, alert);
+        }
+    }
+
+    public void cleanUser() {
+        home.getTxtUserUser().setText("");
+        home.getTxtPasswordUser().setText("");
+        home.getTxtRepeatPasswordUser().setText("");
+    }
 }

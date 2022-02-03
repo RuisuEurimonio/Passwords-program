@@ -77,9 +77,15 @@ public class Home extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         txtSearchUser = new javax.swing.JTextField();
         btnSearchUser = new javax.swing.JButton();
-        jPanel16 = new javax.swing.JPanel();
+        jLabel9 = new javax.swing.JLabel();
+        txtUserUser = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        txtPasswordUser = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
+        txtRepeatPasswordUser = new javax.swing.JTextField();
         btnNewUser = new javax.swing.JButton();
         btnDeleteUser = new javax.swing.JButton();
+        btnCleanUser = new javax.swing.JButton();
         jPanel10 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -160,6 +166,7 @@ public class Home extends javax.swing.JFrame {
         jPanel4.add(jPanel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 680, 13));
 
         jtpTables.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
+        jtpTables.setEnabled(false);
 
         jPanel5.setBackground(new java.awt.Color(242, 167, 187));
         jPanel5.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED, new java.awt.Color(254, 207, 220), new java.awt.Color(13, 13, 13)));
@@ -285,6 +292,9 @@ public class Home extends javax.swing.JFrame {
         btnSelectInfo.setText("<html> Información. </html>");
         jPanel4.add(btnSelectInfo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, 152, 35));
 
+        jtpInputs.setFocusCycleRoot(true);
+        jtpInputs.setFocusable(false);
+
         jPanel8.setBackground(new java.awt.Color(242, 167, 187));
         jPanel8.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED, new java.awt.Color(254, 207, 220), new java.awt.Color(13, 13, 0)));
         jPanel8.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -296,6 +306,7 @@ public class Home extends javax.swing.JFrame {
 
         txtEmailPassword.setBackground(new java.awt.Color(13, 13, 13));
         txtEmailPassword.setForeground(new java.awt.Color(254, 207, 220));
+        txtEmailPassword.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         jPanel8.add(txtEmailPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 183, -1));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -443,48 +454,55 @@ public class Home extends javax.swing.JFrame {
 
         jPanel9.add(jPanel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(8, 116, 500, 45));
 
-        jPanel16.setBackground(new java.awt.Color(231, 198, 255));
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(13, 13, 13));
+        jLabel9.setText("Usuario:");
+        jPanel9.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
 
-        btnNewUser.setBackground(new java.awt.Color(255, 198, 255));
-        btnNewUser.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        btnNewUser.setForeground(new java.awt.Color(13, 13, 13));
-        btnNewUser.setText("Registrar Nuevo Usuario.");
-        btnNewUser.addActionListener(new java.awt.event.ActionListener() {
+        txtUserUser.setBackground(new java.awt.Color(13, 13, 13));
+        txtUserUser.setForeground(new java.awt.Color(254, 207, 220));
+        jPanel9.add(txtUserUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 150, 25));
+
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(13, 13, 13));
+        jLabel10.setText("Contraseña:");
+        jPanel9.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 10, -1, -1));
+
+        txtPasswordUser.setBackground(new java.awt.Color(13, 13, 13));
+        txtPasswordUser.setForeground(new java.awt.Color(254, 207, 220));
+        jPanel9.add(txtPasswordUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 40, 150, 25));
+
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(13, 13, 13));
+        jLabel11.setText("Repetir contraseña:");
+        jPanel9.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 10, -1, -1));
+
+        txtRepeatPasswordUser.setBackground(new java.awt.Color(13, 13, 13));
+        txtRepeatPasswordUser.setForeground(new java.awt.Color(254, 207, 220));
+        txtRepeatPasswordUser.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNewUserActionPerformed(evt);
+                txtRepeatPasswordUserActionPerformed(evt);
             }
         });
+        jPanel9.add(txtRepeatPasswordUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 40, 150, 25));
+
+        btnNewUser.setBackground(new java.awt.Color(255, 198, 255));
+        btnNewUser.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnNewUser.setForeground(new java.awt.Color(13, 13, 0));
+        btnNewUser.setText("Crear Nuevo Usuario.");
+        jPanel9.add(btnNewUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 170, 25));
 
         btnDeleteUser.setBackground(new java.awt.Color(255, 198, 255));
-        btnDeleteUser.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnDeleteUser.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnDeleteUser.setForeground(new java.awt.Color(13, 13, 13));
         btnDeleteUser.setText("Eliminar Usuario.");
+        jPanel9.add(btnDeleteUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 80, 170, 25));
 
-        javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
-        jPanel16.setLayout(jPanel16Layout);
-        jPanel16Layout.setHorizontalGroup(
-            jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel16Layout.createSequentialGroup()
-                .addContainerGap(71, Short.MAX_VALUE)
-                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel16Layout.createSequentialGroup()
-                        .addComponent(btnNewUser)
-                        .addGap(56, 56, 56))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel16Layout.createSequentialGroup()
-                        .addComponent(btnDeleteUser, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(82, 82, 82))))
-        );
-        jPanel16Layout.setVerticalGroup(
-            jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel16Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(btnNewUser)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnDeleteUser)
-                .addContainerGap(17, Short.MAX_VALUE))
-        );
-
-        jPanel9.add(jPanel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 370, 100));
+        btnCleanUser.setBackground(new java.awt.Color(255, 198, 255));
+        btnCleanUser.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnCleanUser.setForeground(new java.awt.Color(13, 13, 13));
+        btnCleanUser.setText("Limpiar.");
+        jPanel9.add(btnCleanUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 80, 100, 25));
 
         jtpInputs.addTab("tab2", jPanel9);
 
@@ -583,9 +601,9 @@ public class Home extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnSelectPasswordActionPerformed
 
-    private void btnNewUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewUserActionPerformed
+    private void txtRepeatPasswordUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRepeatPasswordUserActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnNewUserActionPerformed
+    }//GEN-LAST:event_txtRepeatPasswordUserActionPerformed
 
     /**
      * @param args the command line arguments
@@ -624,6 +642,7 @@ public class Home extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCleanPassword;
+    private javax.swing.JButton btnCleanUser;
     private javax.swing.JButton btnDeletePassword;
     private javax.swing.JButton btnDeleteUser;
     private javax.swing.JButton btnNewUser;
@@ -635,6 +654,8 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JButton btnSelectUsers;
     private javax.swing.JButton btnUpdatePassword;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -642,6 +663,7 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
@@ -649,7 +671,6 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel15;
-    private javax.swing.JPanel jPanel16;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -673,8 +694,11 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JTextField txtNameInfo;
     private javax.swing.JTextArea txtNotePassword;
     private javax.swing.JTextField txtPasswordPassword;
+    private javax.swing.JTextField txtPasswordUser;
+    private javax.swing.JTextField txtRepeatPasswordUser;
     private javax.swing.JTextField txtSearchPassword;
     private javax.swing.JTextField txtSearchUser;
+    private javax.swing.JTextField txtUserUser;
     // End of variables declaration//GEN-END:variables
 
     public JButton getBtnCleanPassword() {
@@ -789,22 +813,6 @@ public class Home extends javax.swing.JFrame {
         this.txtSearchPassword = txtSearchPassword;
     }
 
-    public JButton getBtnDeleteUser() {
-        return btnDeleteUser;
-    }
-
-    public void setBtnDeleteUser(JButton btnDeleteUser) {
-        this.btnDeleteUser = btnDeleteUser;
-    }
-
-    public JButton getBtnNewUser() {
-        return btnNewUser;
-    }
-
-    public void setBtnNewUser(JButton btnNewUser) {
-        this.btnNewUser = btnNewUser;
-    }
-
     public JButton getBtnSearchUser() {
         return btnSearchUser;
     }
@@ -869,6 +877,52 @@ public class Home extends javax.swing.JFrame {
         this.txtNotePassword = txtNotePassword;
     }
 
-    
-    
+    public JButton getBtnDeleteUser() {
+        return btnDeleteUser;
+    }
+
+    public void setBtnDeleteUser(JButton btnDeleteUser) {
+        this.btnDeleteUser = btnDeleteUser;
+    }
+
+    public JButton getBtnNewUser() {
+        return btnNewUser;
+    }
+
+    public void setBtnNewUser(JButton btnNewUser) {
+        this.btnNewUser = btnNewUser;
+    }
+
+    public JTextField getTxtPasswordUser() {
+        return txtPasswordUser;
+    }
+
+    public void setTxtPasswordUser(JTextField txtPasswordUser) {
+        this.txtPasswordUser = txtPasswordUser;
+    }
+
+    public JTextField getTxtRepeatPasswordUser() {
+        return txtRepeatPasswordUser;
+    }
+
+    public void setTxtRepeatPasswordUser(JTextField txtRepeatPasswordUser) {
+        this.txtRepeatPasswordUser = txtRepeatPasswordUser;
+    }
+
+    public JTextField getTxtUserUser() {
+        return txtUserUser;
+    }
+
+    public void setTxtUserUser(JTextField txtUserUser) {
+        this.txtUserUser = txtUserUser;
+    }
+
+    public JButton getBtnCleanUser() {
+        return btnCleanUser;
+    }
+
+    public void setBtnCleanUser(JButton btnCleanUser) {
+        this.btnCleanUser = btnCleanUser;
+    }
+
 }

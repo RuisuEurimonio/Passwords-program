@@ -379,5 +379,5 @@ public class Login extends javax.swing.JFrame {
     public void setLabelUser(JTextField labelUser) {
         this.labelUser = labelUser;
     }
-    
+
 }

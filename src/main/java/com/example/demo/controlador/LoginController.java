@@ -32,7 +32,7 @@ public class LoginController implements ActionListener {
     private LoginModel loginModel;
 
     private SecurityController securityController = new SecurityController();
-    
+
     String templateHtmlStart = "<html><h1 style='font-size:18px;color:#cc8398'>";
     String templateHtmlEnd = "</h1></html>";
 
@@ -84,14 +84,14 @@ public class LoginController implements ActionListener {
             if (loginDB.isPresent()) {
                 loginVista.dispose();
                 Home home = new Home();
-                HomeController hm = new HomeController(home, passwordRepository, txtUser, password);
+                HomeController hm = new HomeController(home, passwordRepository, loginRepository, txtUser, password);
                 home.setVisible(true);
                 JOptionPane.showMessageDialog(dialogRegister, templateHtmlStart + " Has iniciado sesión. " + templateHtmlEnd, "Iniciar sesión.", JOptionPane.PLAIN_MESSAGE, ok);
             } else {
                 JOptionPane.showMessageDialog(dialogRegister, templateHtmlStart + " Usuario o contraseña incorrectos " + templateHtmlEnd, "Iniciar sesión.", JOptionPane.PLAIN_MESSAGE, error);
             }
         } else {
-            JOptionPane.showMessageDialog(dialogRegister, templateHtmlStart+"Ups!!, llena todas las casillas"+templateHtmlEnd+"\n"+templateHtmlStart+"~~Onegaishimasu Oniichan. "+templateHtmlEnd, "Registrarse", JOptionPane.PLAIN_MESSAGE, alert);
+            JOptionPane.showMessageDialog(dialogRegister, templateHtmlStart + "Ups!!, llena todas las casillas" + templateHtmlEnd + "\n" + templateHtmlStart + "~~Onegaishimasu Oniichan. " + templateHtmlEnd, "Registrarse", JOptionPane.PLAIN_MESSAGE, alert);
         }
     }
 
@@ -129,10 +129,10 @@ public class LoginController implements ActionListener {
                     dialogRegister.getLabelNewRepeatPass().setText("");
                 }
             } else {
-                JOptionPane.showMessageDialog(dialogRegister, templateHtmlStart + " El usuario debe tener minimo 3 caracteres y la contraseña 9. " + templateHtmlEnd, "Registrarse", JOptionPane.PLAIN_MESSAGE, alert);
+                JOptionPane.showMessageDialog(dialogRegister, templateHtmlStart + "Ups!!, Los campos deben tener:</h1><br><h2 style='color:#FFC6FF'>Usuario: 3 caracteres.</h2><br><h2 style='color:#FFC6FF'>Contraseña: 9 caracteres.</h2></html>", "Guardar usuario.", JOptionPane.PLAIN_MESSAGE, alert);
             }
         } else {
-            JOptionPane.showMessageDialog(dialogRegister, templateHtmlStart + " Ups!!, llena todas las casillas </h1></html>\n"+ templateHtmlStart + "~~Onegaishimasu Oniichan. </h1></html>", "Registrarse", JOptionPane.PLAIN_MESSAGE, alert);
+            JOptionPane.showMessageDialog(dialogRegister, templateHtmlStart + " Ups!!, llena todas las casillas </h1></html>\n" + templateHtmlStart + "~~Onegaishimasu Oniichan. </h1></html>", "Registrarse", JOptionPane.PLAIN_MESSAGE, alert);
         }
     }
 

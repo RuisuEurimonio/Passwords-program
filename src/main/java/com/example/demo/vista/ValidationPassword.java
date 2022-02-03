@@ -149,6 +149,4 @@ public class ValidationPassword extends javax.swing.JDialog {
         this.btnPasswordValidation = btnPasswordValidation;
     }
 
-    
-
 }

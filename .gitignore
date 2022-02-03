@@ -34,3 +34,4 @@ build/
 
 application.properties
 SecurityController.java
+${project.build.directory}

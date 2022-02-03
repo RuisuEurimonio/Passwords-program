@@ -13,12 +13,12 @@ import java.util.regex.Pattern;
  * @author Usuario
  */
 public class Validations {
-    
-    public static boolean validationEmail(String email){
+
+    public static boolean validationEmail(String email) {
         String regex = "^[\\w-]+(\\.[\\w-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
     }
-    
+
 }

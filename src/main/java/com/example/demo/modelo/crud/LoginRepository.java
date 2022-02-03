@@ -13,6 +13,7 @@ import java.util.Optional;
  *
  * @author Usuario
  */
-public interface LoginRepository extends CrudRepository<LoginModel, Integer>{
-     Optional<LoginModel> findByNameAndPassword(String user, String password);
+public interface LoginRepository extends CrudRepository<LoginModel, Integer> {
+
+    Optional<LoginModel> findByNameAndPassword(String user, String password);
 }

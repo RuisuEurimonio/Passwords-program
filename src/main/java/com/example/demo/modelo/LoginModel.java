@@ -15,7 +15,7 @@ import org.springframework.data.relational.core.mapping.Table;
  */
 @Table("Account")
 public class LoginModel {
-    
+
     @Id
     @Column("idAccount")
     private int id;
@@ -23,9 +23,9 @@ public class LoginModel {
     private String name;
     @Column("password")
     private String password;
-    
-    public LoginModel(){
-        
+
+    public LoginModel() {
+
     }
 
     public LoginModel(int id, String name, String password) {
@@ -42,8 +42,6 @@ public class LoginModel {
         this.name = name;
     }
 
-    
-
     public int getId() {
         return id;
     }
@@ -59,7 +57,5 @@ public class LoginModel {
     public void setPassword(String password) {
         this.password = password;
     }
-    
-    
-    
+
 }

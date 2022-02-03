@@ -16,7 +16,7 @@ import org.springframework.data.relational.core.mapping.Table;
  */
 @Table("Password")
 public class PasswordModel {
-    
+
     @Id
     @Column("idPassword")
     private int idPassword;
@@ -30,7 +30,7 @@ public class PasswordModel {
     private String date;
 
     public PasswordModel() {
-    } 
+    }
 
     public PasswordModel(int idPassword, String email, String password, String description) {
         this.idPassword = idPassword;
@@ -78,7 +78,5 @@ public class PasswordModel {
     public void setDate(String date) {
         this.date = date;
     }
-    
-    
-    
+
 }
