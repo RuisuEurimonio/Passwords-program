@@ -44,6 +44,7 @@ public class RegisterNewUser extends javax.swing.JDialog {
         buttonNewAccept = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setIconImage(null);
 
         jPanel1.setBackground(new java.awt.Color(242, 206, 216));
 

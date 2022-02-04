@@ -52,6 +52,8 @@ public class HomeController implements ActionListener {
         tablePasswords();
         home.getJtpInputs().setSelectedIndex(0);
         home.getJtpTables().setSelectedIndex(0);
+        home.setIconImage(new ImageIcon(getClass().getResource("/lockIcon.png")).getImage());
+        vp.setIconImage(new ImageIcon(getClass().getResource("/lockIcon.png")).getImage());
     }
 
     private void createEvents() {
@@ -80,8 +82,11 @@ public class HomeController implements ActionListener {
     MouseListener mouseListener = new MouseListener() {
         @Override
         public void mouseClicked(MouseEvent e) {
-            if (e.getClickCount() % 2 == 0) {
-                loadPassword();
+            if(e.getSource() == home.getJtPasswords()){
+                if (e.getClickCount() % 2 == 0) {
+                    loadPassword();
+                    System.out.println(e.getSource());
+                } 
             }
         }
 
@@ -163,7 +168,7 @@ public class HomeController implements ActionListener {
                     passwordModel.setPassword(passwordEncrypt);
                     passwordModel.setDescription(addition);
                     passwordModel.setDate(sdf.format(date));
-                    int answer = JOptionPane.showConfirmDialog(home, templateHtmlStart + "¿Desea guardar esta contraseña?" + templateHtmlEnd, "Guardar contraseña.", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, question);
+                    int answer = JOptionPane.showConfirmDialog(home, templateHtmlStart + "¿Deseas guardar esta contraseña?" + templateHtmlEnd, "Guardar contraseña.", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, question);
                     if (answer == 0) {
                         passwordRepository.save(passwordModel);
                         cleanPasswords();
@@ -181,7 +186,7 @@ public class HomeController implements ActionListener {
                 JOptionPane.showMessageDialog(home, templateHtmlStart + "El correo no es valido." + templateHtmlEnd, "Guardar contraseña", JOptionPane.PLAIN_MESSAGE, alert);
             }
         } else {
-            JOptionPane.showMessageDialog(home, templateHtmlStart + "Hay espacios vacios necesarios." + templateHtmlEnd, "Guardar contraseña", JOptionPane.PLAIN_MESSAGE, alert);
+            JOptionPane.showMessageDialog(home, templateHtmlStart + " Ups!!, llena todas las casillas </h1></html>\n" + templateHtmlStart + "~~Onegaishimasu Oniichan. </h1></html>", "Registrarse", JOptionPane.PLAIN_MESSAGE, alert);
         }
     }
 
@@ -213,7 +218,7 @@ public class HomeController implements ActionListener {
                 vp.getTxtPasswordValidation().setText("");
                 home.getBtnSavePassword().setEnabled(false);
             } else {
-                JOptionPane.showMessageDialog(home, templateHtmlStart + "Contraseña incorrecta." + templateHtmlEnd, "Ver contraseña", JOptionPane.PLAIN_MESSAGE, error);
+                JOptionPane.showMessageDialog(home, templateHtmlStart + "Ups!!! Contraseña incorrecta." + templateHtmlEnd, "Ver contraseña", JOptionPane.PLAIN_MESSAGE, error);
             }
             vp.getTxtPasswordValidation().setText("");
         } else {
@@ -230,7 +235,7 @@ public class HomeController implements ActionListener {
             if (!pm.getEmail().equals(home.getTxtEmailPassword().getText())
                     || !pm.getPassword().equals(encrypt)
                     || !pm.getDescription().equals(home.getTxtNotePassword().getText())) {
-                int answer = JOptionPane.showConfirmDialog(home, templateHtmlStart + "¿Desea actualizar esta contraseña?" + templateHtmlEnd, "Actualizar contraseña", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, question);
+                int answer = JOptionPane.showConfirmDialog(home, templateHtmlStart + "¿Deseas actualizar esta contraseña?" + templateHtmlEnd, "Actualizar contraseña", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, question);
                 if (answer == 0) {
                     Date date = new Date();
                     SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss a");
@@ -258,7 +263,7 @@ public class HomeController implements ActionListener {
                 cleanPasswords();
             }
         } else {
-            JOptionPane.showMessageDialog(home, templateHtmlStart + "Seleccione una contraseña." + templateHtmlEnd, "Actualizar contraseña", JOptionPane.PLAIN_MESSAGE, alert);
+            JOptionPane.showMessageDialog(home, templateHtmlStart + "Selecciona una contraseña." + templateHtmlEnd, "Actualizar contraseña", JOptionPane.PLAIN_MESSAGE, alert);
         }
     }
 
@@ -276,7 +281,7 @@ public class HomeController implements ActionListener {
                 tablePasswords();
             }
         } else {
-            JOptionPane.showMessageDialog(home, templateHtmlStart + "Seleccione una contraseña." + templateHtmlEnd, "Eliminar contraseña", JOptionPane.PLAIN_MESSAGE, alert);
+            JOptionPane.showMessageDialog(home, templateHtmlStart + "Selecciona una contraseña." + templateHtmlEnd, "Eliminar contraseña", JOptionPane.PLAIN_MESSAGE, alert);
         }
     }
 

@@ -16,7 +16,6 @@ import java.awt.event.ActionListener;
 import java.util.Optional;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
@@ -46,6 +45,8 @@ public class LoginController implements ActionListener {
         this.loginVista = loginVista;
         this.passwordRepository = pr;
         createEvents();
+        loginVista.setIconImage(new ImageIcon(getClass().getResource("/lockIcon.png")).getImage());
+        dialogRegister.setIconImage(new ImageIcon(getClass().getResource("/lockIcon.png")).getImage());
     }
 
     public void createEvents() {
