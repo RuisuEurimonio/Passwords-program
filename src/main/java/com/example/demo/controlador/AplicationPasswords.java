@@ -30,6 +30,7 @@ public class AplicationPasswords {
         SpringApplicationBuilder builder = new SpringApplicationBuilder(AplicationPasswords.class);
         builder.headless(false);
         ConfigurableApplicationContext context = builder.run(args);
+        
     }
 
     @Bean
@@ -38,6 +39,7 @@ public class AplicationPasswords {
             Login login = new Login();
             LoginController controller = new LoginController(loginModel, login, passwordRepository);
             login.setVisible(true);
+            BackupController bc = new BackupController();
         };
     }
 
