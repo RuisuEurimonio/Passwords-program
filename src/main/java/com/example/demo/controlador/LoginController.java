@@ -63,6 +63,7 @@ public class LoginController implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent event) {
         if (event.getSource() == loginVista.getButtonCreate()) {
+            cleanLoginInputs();
             dialogRegister.setVisible(true);
         } else if (event.getSource() == loginVista.getButtonLogin()
                 || event.getSource() == loginVista.getLabelUser()
@@ -90,6 +91,7 @@ public class LoginController implements ActionListener {
                 JOptionPane.showMessageDialog(dialogRegister, templateHtmlStart + " Has iniciado sesión. " + templateHtmlEnd, "Iniciar sesión.", JOptionPane.PLAIN_MESSAGE, ok);
             } else {
                 JOptionPane.showMessageDialog(dialogRegister, templateHtmlStart + " Usuario o contraseña incorrectos " + templateHtmlEnd, "Iniciar sesión.", JOptionPane.PLAIN_MESSAGE, error);
+                cleanLoginInputs();
             }
         } else {
             JOptionPane.showMessageDialog(dialogRegister, templateHtmlStart + "Ups!!, llena todas las casillas" + templateHtmlEnd + "\n" + templateHtmlStart + "~~Onegaishimasu Oniichan. " + templateHtmlEnd, "Registrarse", JOptionPane.PLAIN_MESSAGE, alert);
@@ -108,7 +110,7 @@ public class LoginController implements ActionListener {
                         LoginModel account = new LoginModel();
                         account.setName(user);
                         account.setPassword(passwordEncrypt);
-                        int option = JOptionPane.showConfirmDialog(loginVista, templateHtmlStart + " Desea crear esta cuenta? " + templateHtmlEnd, "Registrarse", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, question);
+                        int option = JOptionPane.showConfirmDialog(loginVista, templateHtmlStart + " Deseas crear esta cuenta? " + templateHtmlEnd, "Registrarse", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, question);
                         if (option == 0) {
                             loginRepository.save(account);
                             JOptionPane.showMessageDialog(dialogRegister, templateHtmlStart + " Usuario guardado. " + templateHtmlEnd, "Registrarse", JOptionPane.PLAIN_MESSAGE, ok);
@@ -135,6 +137,11 @@ public class LoginController implements ActionListener {
         } else {
             JOptionPane.showMessageDialog(dialogRegister, templateHtmlStart + " Ups!!, llena todas las casillas </h1></html>\n" + templateHtmlStart + "~~Onegaishimasu Oniichan. </h1></html>", "Registrarse", JOptionPane.PLAIN_MESSAGE, alert);
         }
+    }
+    
+    private void cleanLoginInputs(){
+        loginVista.getLabelUser().setText("");
+        loginVista.getLabelPassword().setText("");
     }
 
 }

@@ -272,7 +272,7 @@ public class HomeController implements ActionListener {
         if (row != -1) {
             String email = home.getJtPasswords().getValueAt(row, 1).toString();
             String description = home.getJtPasswords().getValueAt(row, 3).toString();
-            int answer = JOptionPane.showConfirmDialog(home, templateHtmlStart + "¿Desea eliminar esta contraseña?" + "</h1><br><h2 align='center'>Correo: " + email + "</h2><br><h2 align='center'>Descripción: " + description + "</h2></html>", "Eliminar contraseña", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, question);
+            int answer = JOptionPane.showConfirmDialog(home,"<html><h1 style='font-size:18px;color:#cc8398;text-align:center'>¿Deseas eliminar esta contraseña?" + "</h1><br><h2 align='center'>Correo: " + email + "</h2><br><h2 align='center'>Descripción: " + description + "</h2></html>", "Eliminar contraseña", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, question);
             if (answer == 0) {
                 int id = Integer.parseInt(home.getJtPasswords().getValueAt(row, 0).toString());
                 passwordRepository.deleteById(id);
@@ -379,7 +379,7 @@ public class HomeController implements ActionListener {
         int row = home.getJtUsers().getSelectedRow();
         if (row != -1) {
             String user = home.getJtUsers().getValueAt(row, 1).toString();
-            int answer = JOptionPane.showConfirmDialog(home, templateHtmlStart + "¿Desea eliminar esta contraseña?" + "</h1><br><h2 align='center'>Usuario: " + user + "</h2></html>", "Eliminar usuario", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, question);
+            int answer = JOptionPane.showConfirmDialog(home, "<html><h1 style='font-size:18px;color:#cc8398;text-align:center'> ¿Deseas eliminar este usuario?" + "</h1><br><h2 align='center'>Usuario: " + user + "</h2></html>", "Eliminar usuario", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, question);
             if (answer == 0) {
                 int id = Integer.parseInt(home.getJtUsers().getValueAt(row, 0).toString());
                 lr.deleteById(id);
