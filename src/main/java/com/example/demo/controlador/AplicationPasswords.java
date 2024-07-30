@@ -2,12 +2,9 @@ package com.example.demo.controlador;
 
 import com.example.demo.modelo.crud.LoginRepository;
 import com.example.demo.modelo.crud.PasswordRepository;
-import com.example.demo.vista.Home;
 import com.example.demo.vista.Login;
-import com.example.demo.vista.RegisterNewUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationRunner;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -30,7 +27,6 @@ public class AplicationPasswords {
         SpringApplicationBuilder builder = new SpringApplicationBuilder(AplicationPasswords.class);
         builder.headless(false);
         ConfigurableApplicationContext context = builder.run(args);
-        
     }
 
     @Bean
