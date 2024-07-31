@@ -7,20 +7,26 @@ package contoladorTest;
 
 import com.example.demo.controlador.HomeController;
 import com.example.demo.controlador.SecurityController;
-import com.example.demo.controlador.Validations;
 import com.example.demo.modelo.crud.LoginRepository;
 import com.example.demo.modelo.crud.PasswordRepository;
 import com.example.demo.vista.Home;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+
+import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.times;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 /**
  *
  * @author Ruisu's
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class HomeTest {
     
     @Mock
@@ -41,5 +47,22 @@ public class HomeTest {
     @InjectMocks
     private HomeController homeC;
     
+    @BeforeEach
+    public void setUp(){
+        user = "RuisuXaki";
+        password = "291229122912";
+    }
     
+    @Test
+    public void testSavePasswordEmptyFields(){
+        when(home.getTxtEmailPassword().getText()).thenReturn("");
+        when(home.getTxtPasswordPassword().getText()).thenReturn("");
+        when(home.getTxtNotePassword().getText()).thenReturn("");
+        
+        homeC.savePassword();
+        
+        verify(home, times(1)).getTxtEmailPassword().getText();
+        verify(home, times(1)).getTxtPasswordPassword().getText();
+        verify(home, times(1)).getTxtNotePassword().getText();
+    }
 }
