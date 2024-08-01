@@ -10,12 +10,21 @@ import com.example.demo.controlador.SecurityController;
 import com.example.demo.modelo.crud.LoginRepository;
 import com.example.demo.modelo.crud.PasswordRepository;
 import com.example.demo.vista.Home;
+import java.lang.reflect.Method;
+import java.util.function.Supplier;
+import javax.swing.JButton;
+import javax.swing.JTabbedPane;
+import javax.swing.JTable;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Answers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.verify;
@@ -28,7 +37,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
  */
 @ExtendWith(MockitoExtension.class)
 public class HomeTest {
-    
+      
     @Mock
     private Home home;
     
@@ -37,20 +46,20 @@ public class HomeTest {
     
     @Mock
     private LoginRepository loginR;
-    
-    @Mock
-    private SecurityController securityC;
-    
+
     private static String user;
     private static String password;
     
-    @InjectMocks
     private HomeController homeC;
     
     @BeforeEach
-    public void setUp(){
+    public void setUp() {
+        
         user = "RuisuXaki";
         password = "291229122912";
+        
+        // Initialize HomeController after mocks are set up
+        homeC = new HomeController(home, passwordR, loginR, user, password);
     }
     
     @Test
@@ -65,4 +74,5 @@ public class HomeTest {
         verify(home, times(1)).getTxtPasswordPassword().getText();
         verify(home, times(1)).getTxtNotePassword().getText();
     }
+    
 }
