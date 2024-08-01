@@ -82,7 +82,7 @@ public class LoginController implements ActionListener {
         String txtUser = loginVista.getLabelUser().getText();
         String txtPassword = new String(loginVista.getLabelPassword().getPassword());
         if ("".equals(txtUser) && "".equals(txtPassword)) {
-            Utils.handleEmptyInputsMessage(dialogRegister);
+            Utils.handleEmptyInputsMessage(dialogRegister, "Iniciar sesión");
             return;
         }
 
@@ -103,22 +103,24 @@ public class LoginController implements ActionListener {
     }
 
     private void register() {
+        String titleMessage = "Registrarse";
+        
         String user = dialogRegister.getLabelNewUser().getText();
         String password = dialogRegister.getLabelNewPassword().getText();
         String repeatPass = dialogRegister.getLabelNewRepeatPass().getText();
 
         if ("".equals(user) && "".equals(password) && "".equals(repeatPass)) {
-            Utils.handleEmptyInputsMessage(dialogRegister);
+            Utils.handleEmptyInputsMessage(dialogRegister, titleMessage);
             return;
         }
 
         if (user.length() < 3 && password.length() < 9) {
-            Utils.handleNotValidDataMessage(dialogRegister);
+            Utils.handleNotValidDataMessage(dialogRegister, titleMessage);
             return;
         }
 
         if (!password.equals(repeatPass)) {
-            Utils.handleNotEqualsPasswordsMessage(dialogRegister);
+            Utils.handleNotEqualsPasswordsMessage(dialogRegister, titleMessage);
             dialogRegister.getLabelNewRepeatPass().setText("");
             return;
         }
@@ -133,14 +135,15 @@ public class LoginController implements ActionListener {
         account.setName(user);
         account.setPassword(passwordEncrypt);
         
-        int option = Utils.handleCreateQuestionMessage(dialogRegister," ¿Desea crear esta cuenta?", "Registrarse");
+        int option = Utils.handleActionQuestionMessage(dialogRegister," ¿Desea crear esta cuenta?", "Registrarse");
         if (option != 0) {
-            Utils.handleCancelActionMessage(dialogRegister);
+            Utils.handleCancelActionMessage(dialogRegister, " Se ha cancelado el registrar usuario. ", "Registrarse");
             resetInputsRegister();
+            return;
         }
         
         loginRepository.save(account);
-        Utils.handleSuccessCreationMessage(dialogRegister);
+        Utils.handleSuccessActionMessage(dialogRegister, " Usuario guardado. ", "Registrarse");
         resetInputsRegister();
         dialogRegister.dispose();
     }
