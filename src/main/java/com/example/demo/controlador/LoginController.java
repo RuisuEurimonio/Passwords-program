@@ -32,14 +32,6 @@ public class LoginController implements ActionListener {
 
     private SecurityController securityController;
 
-    private String templateHtmlStart = Utils.templateHtmlStart;
-    private String templateHtmlEnd = Utils.templateHtmlEnd;
-
-    private ImageIcon okImage = Utils.ok;
-    private ImageIcon alertImage = Utils.alert;
-    private ImageIcon questionImage = Utils.question;
-    private ImageIcon errorImage = Utils.error;
-
     private final String KEY_WORD = SecurityController.REGISTER_KEY;
 
     public LoginController(LoginRepository loginRepository, Login loginVista, PasswordRepository pr) {
@@ -90,7 +82,7 @@ public class LoginController implements ActionListener {
         String txtUser = loginVista.getLabelUser().getText();
         String txtPassword = new String(loginVista.getLabelPassword().getPassword());
         if ("".equals(txtUser) && "".equals(txtPassword)) {
-            JOptionPane.showMessageDialog(dialogRegister, templateHtmlStart + "Ups!!, llena todas las casillas" + templateHtmlEnd + "\n" + templateHtmlStart + "~~Onegaishimasu Oniichan. " + templateHtmlEnd, "Registrarse", JOptionPane.PLAIN_MESSAGE, alertImage);
+            Utils.handleEmptyInputsMessage(dialogRegister);
             return;
         }
 
@@ -98,7 +90,7 @@ public class LoginController implements ActionListener {
         Optional<LoginModel> DataLoginDB = loginRepository.findByNameAndPassword(txtUser, passwordEncode);
 
         if (DataLoginDB.isEmpty()) {
-            JOptionPane.showMessageDialog(dialogRegister, templateHtmlStart + " Usuario o contraseña incorrectos " + templateHtmlEnd, "Iniciar sesión.", JOptionPane.PLAIN_MESSAGE, errorImage);
+            Utils.handleWrongDataInputsMessage(dialogRegister);
             cleanLoginInputs();
             return;
         }
@@ -107,7 +99,7 @@ public class LoginController implements ActionListener {
         Home home = new Home();
         HomeController hm = new HomeController(home, passwordRepository, loginRepository, txtUser, passwordEncode);
         home.setVisible(true);
-        JOptionPane.showMessageDialog(dialogRegister, templateHtmlStart + " Has iniciado sesión. " + templateHtmlEnd, "Iniciar sesión.", JOptionPane.PLAIN_MESSAGE, okImage);
+        Utils.handleSuccesLoginMessage(dialogRegister);
     }
 
     private void register() {
@@ -116,23 +108,23 @@ public class LoginController implements ActionListener {
         String repeatPass = dialogRegister.getLabelNewRepeatPass().getText();
 
         if ("".equals(user) && "".equals(password) && "".equals(repeatPass)) {
-            JOptionPane.showMessageDialog(dialogRegister, templateHtmlStart + " Ups!!, llena todas las casillas </h1></html>\n" + templateHtmlStart + "~~Onegaishimasu Oniichan. </h1></html>", "Registrarse", JOptionPane.PLAIN_MESSAGE, alertImage);
+            Utils.handleEmptyInputsMessage(dialogRegister);
             return;
         }
 
         if (user.length() < 3 && password.length() < 9) {
-            JOptionPane.showMessageDialog(dialogRegister, templateHtmlStart + "Ups!!, Los campos deben tener:</h1><br><h2 style='color:#FFC6FF'>Usuario: 3 caracteres.</h2><br><h2 style='color:#FFC6FF'>Contraseña: 9 caracteres.</h2></html>", "Guardar usuario.", JOptionPane.PLAIN_MESSAGE, alertImage);
+            Utils.handleNotValidDataMessage(dialogRegister);
             return;
         }
 
         if (!password.equals(repeatPass)) {
-            JOptionPane.showMessageDialog(dialogRegister, templateHtmlStart + " Ups!!, las contraseñas no son iguales. " + templateHtmlEnd, "Registrarse", JOptionPane.PLAIN_MESSAGE, alertImage);
+            Utils.handleNotEqualsPasswordsMessage(dialogRegister);
             dialogRegister.getLabelNewRepeatPass().setText("");
             return;
         }
 
         if (!user.contains(KEY_WORD)) {
-            JOptionPane.showMessageDialog(dialogRegister, templateHtmlStart + " Ha ocurrido un error, no cumple con los requerimientos. " + templateHtmlEnd, "Registrarse", JOptionPane.PLAIN_MESSAGE, errorImage);
+            Utils.handleNotCorrectKeyWordMessage(dialogRegister);
             return;
         }
 
@@ -141,14 +133,14 @@ public class LoginController implements ActionListener {
         account.setName(user);
         account.setPassword(passwordEncrypt);
         
-        int option = JOptionPane.showConfirmDialog(loginVista, templateHtmlStart + " Deseas crear esta cuenta? " + templateHtmlEnd, "Registrarse", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, questionImage);
+        int option = Utils.handleCreateQuestionMessage(dialogRegister," ¿Desea crear esta cuenta?", "Registrarse");
         if (option != 0) {
-            JOptionPane.showMessageDialog(dialogRegister, templateHtmlStart + " Se ha cancelado el registrar usuario. " + templateHtmlEnd, "Registrarse", JOptionPane.PLAIN_MESSAGE, alertImage);
+            Utils.handleCancelActionMessage(dialogRegister);
             resetInputsRegister();
         }
         
         loginRepository.save(account);
-        JOptionPane.showMessageDialog(dialogRegister, templateHtmlStart + " Usuario guardado. " + templateHtmlEnd, "Registrarse", JOptionPane.PLAIN_MESSAGE, okImage);
+        Utils.handleSuccessCreationMessage(dialogRegister);
         resetInputsRegister();
         dialogRegister.dispose();
     }
