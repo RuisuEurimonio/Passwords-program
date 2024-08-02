@@ -6,25 +6,14 @@
 package contoladorTest;
 
 import com.example.demo.controlador.HomeController;
-import com.example.demo.controlador.SecurityController;
 import com.example.demo.modelo.crud.LoginRepository;
 import com.example.demo.modelo.crud.PasswordRepository;
 import com.example.demo.vista.Home;
-import java.lang.reflect.Method;
-import java.util.function.Supplier;
-import javax.swing.JButton;
-import javax.swing.JTabbedPane;
-import javax.swing.JTable;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Answers;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.verify;

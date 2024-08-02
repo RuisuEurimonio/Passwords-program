@@ -7,11 +7,13 @@ package com.example.demo.modelo.crud;
 
 import com.example.demo.modelo.PasswordModel;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author Usuario
  */
+@Repository
 public interface PasswordRepository extends CrudRepository<PasswordModel, Integer> {
 
     Iterable<PasswordModel> findByDescriptionContainingIgnoreCase(String word);

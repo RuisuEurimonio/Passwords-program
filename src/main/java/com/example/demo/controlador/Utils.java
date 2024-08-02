@@ -18,14 +18,14 @@ import javax.swing.JOptionPane;
 public class Utils {
 
     public static boolean isValidEmail(String email) {
-        String regex = "^[\\w-]+(\\.[\\w-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+        String regex = "^[\\w-]{2,}(\\.[\\w-]+)*@[A-Za-z0-9]{3,}+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
     }
     
-    public static ImageIcon ok = new javax.swing.ImageIcon(Utils.class.getResource("/ok.png")); // NOI18N
-    public static ImageIcon error = new javax.swing.ImageIcon(Utils.class.getResource("/error.png")); //NOI18N
+    private static ImageIcon ok = new javax.swing.ImageIcon(Utils.class.getResource("/ok.png")); // NOI18N
+    private static ImageIcon error = new javax.swing.ImageIcon(Utils.class.getResource("/error.png")); //NOI18N
     public static ImageIcon question = new javax.swing.ImageIcon(Utils.class.getResource("/question.png")); // NOI18N
     public static ImageIcon alert = new javax.swing.ImageIcon(Utils.class.getResource("/alert.png")); //NOI18N
     
